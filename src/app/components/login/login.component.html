@@ -33,15 +33,30 @@
                               <input class="" type="password" [(ngModel)]="model.password" matInput>
                           </mat-form-field>
                       </div>
-                      <div>
-                        <mat-checkbox class="">Remember Me</mat-checkbox>
+                      
+                      <div >
+                        <mat-checkbox class="mb-0">Remember Me</mat-checkbox>
 
                       </div>
-                      <div>
-                          <button class="radiusButton backGround" (click)="logIn()" mat-raised-button mat-button color="primary">Login</button>
+
+                      <div class="row justify-content-center">
+
+                      <div class="col-md-2 mr-3">
+                          <button class="radiusButton backGround" (click)="logIn()"  mat-raised-button mat-button color="primary">Login</button>
       
                       </div>
+                      <div class="col-md-2 mr-5">
+                          <button class="radiusButton backGround" (click)="signUp()" mat-raised-button mat-button color="primary">Signup</button>
+      
+                      </div>
+                    </div>
+
                   </div>
+                  
+                  <div class="col-md-12 d-flex mt-3 justify-content-end">
+                      <a href="">Forget Password ?</a>
+                  </div>
+                  
             </div>
             <!-- <div class="d-flex justify-content-between"> -->
                 

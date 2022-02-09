@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class SignupComponent implements OnInit {
 model:any={}
   constructor(public route:Router,public _snackBar:MatSnackBar) { }
-  logIn(){
+  signUp(){
 
     if(this.model.firstName && this.model.email && this.model.password && this.model.confirmPassword){
       if(this.model.password == this.model.confirmPassword)
@@ -28,6 +28,11 @@ model:any={}
    
 
   }
+
+  login(){
+    this.route.navigateByUrl('/login')
+  }
+  
   ngOnInit(): void {
   }
 

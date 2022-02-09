@@ -18,6 +18,10 @@ model:any={}
       duration: 3000
     });
   }
+  signUp(){
+    this.route.navigateByUrl('/signup')
+
+  }
   ngOnInit(){
     console.log(history.state.data)
     if(history.state.data)
