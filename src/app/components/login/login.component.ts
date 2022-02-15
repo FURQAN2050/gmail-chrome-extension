@@ -12,7 +12,7 @@ model:any={}
   constructor(public route:Router,public _snackBar:MatSnackBar) { }
   logIn(){
     if(this.model.email && this.model.password)
-    this.route.navigateByUrl('/signup')
+    this.route.navigateByUrl('/emails')
     else
     this._snackBar.open('Please Enter Email Or Password', undefined, {
       duration: 3000

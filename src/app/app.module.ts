@@ -14,6 +14,13 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EmailsComponent } from './components/emails/emails.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTableModule} from '@angular/material/table';
+import { AddEmailsModalComponent } from './components/emails/add-emails-modal/add-emails-modal.component';
+import {MatDialogModule} from '@angular/material/dialog';
+
+
 
 
 
@@ -21,7 +28,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    EmailsComponent,
+    AddEmailsModalComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +43,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule,
+    MatTableModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
