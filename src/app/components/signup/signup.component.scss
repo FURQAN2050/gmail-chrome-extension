@@ -1,0 +1,40 @@
+
+.background {
+   
+    height: 100%;
+    width: 100%;
+   
+}
+
+::ng-deep app-signup {
+    .mat-form-field-wrapper{
+        // .mat-form-field-flex{
+        //     border-radius: 30px !important
+        // }
+        .mat-form-field-underline{
+            width: 0px;
+        }
+    }
+}
+.input{
+    ::ng-deep {
+       
+            .mat-form-field-infix{
+                width: 392px;     
+    
+            }
+        }
+     
+    }
+
+.centerP {
+    padding: 150px 0;
+    text-align: center;
+  }
+
+.radiusButton{
+    border-radius: 20px;
+}
+.backGroundColor{
+    background-color: #0096c7;
+}

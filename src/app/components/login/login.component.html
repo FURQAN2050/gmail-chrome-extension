@@ -1,1 +1,143 @@
-<p>login works!</p>
+
+
+
+
+
+
+
+
+<div class="backGround height margin">
+
+    <div class="cardHeightWidth">
+        <mat-card class="height">
+            <div class="row">
+                <div class=" margin col-md-6">
+                    <mat-card class="cardWidth imgRadius shadow">
+                      <img class=" imgRadius avatarImg" src="../../../assets/test.png" alt="avatar">
+  
+                    </mat-card>
+                  </div>
+                  <div class=" col-md-6 text-center bg-white">
+                      <h1 class="font-weight-bold">Login</h1>
+                      <div>
+                          <mat-form-field class="example-full-width " appearance="fill">
+                              <mat-label>Email</mat-label>
+      
+                              <input [(ngModel)]="model.email" type="email" matInput>
+                          </mat-form-field>
+                      </div>
+                      <div class="">
+                          <mat-form-field class="example-full-width  " appearance="fill">
+                              <mat-label>Password</mat-label>
+      
+                              <input class="" type="password" [(ngModel)]="model.password" matInput>
+                          </mat-form-field>
+                      </div>
+                      
+                      <div >
+                        <mat-checkbox [(ngModel)]="model.rememberMe" class="mb-0">Remember Me</mat-checkbox>
+
+                      </div>
+
+                      <div class="row justify-content-center">
+
+                      <div class="col-md-2 mr-3">
+                          <button class="radiusButton backGround" (click)="logIn()"  mat-raised-button mat-button color="primary">Login</button>
+      
+                      </div>
+                      <div class="col-md-2 mr-5">
+                          <button class="radiusButton backGround" (click)="signUp()" mat-raised-button mat-button color="primary">Signup</button>
+      
+                      </div>
+                    </div>
+
+                  </div>
+                  
+                  <div class="col-md-12 d-flex mt-3 justify-content-end">
+                      <a href="">Forget Password ?</a>
+                  </div>
+                  
+            </div>
+            <!-- <div class="d-flex justify-content-between"> -->
+                
+            <!-- </div> -->
+           
+        </mat-card>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div>
+
+    <div class="row">
+        <div class="col-md-6 backGround">
+            <div class="margin  height">
+                <div>
+                    <h1 class="headingColor text-center">Name Of App</h1>
+
+                    <img class=" imgHeight" src="../../../assets/Login.webp" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 margin  height">
+
+            <mat-card class="backGround">
+                <div class="col-md-12 text-center bg-white">
+                    <h1>Login</h1>
+                    <div>
+                        <mat-form-field class="example-full-width " appearance="fill">
+                            <mat-label>Email</mat-label>
+    
+                            <input matInput>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field class="example-full-width " appearance="fill">
+                            <mat-label>Password</mat-label>
+    
+                            <input matInput>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <button class="radiusButton backGround" mat-raised-button mat-button color="primary">Primary</button>
+    
+                    </div>
+    
+                </div>
+            </mat-card>
+           
+
+
+
+
+
+        </div>
+    </div>
+</div> -->
