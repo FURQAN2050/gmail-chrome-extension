@@ -1,0 +1,30 @@
+{
+  "name": "enduser",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "emails": {
+      "type": "hasMany",
+      "model": "email",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "templates": {
+      "type": "hasMany",
+      "model": "template",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

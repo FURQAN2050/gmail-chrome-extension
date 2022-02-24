@@ -34,5 +34,21 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "email": {
+    "dataSource": "db",
+    "public": true
+  },
+  "template": {
+    "dataSource": "db",
+    "public": true
+  },
+  "enduser": {
+    "dataSource": "db",
+    "public": true
+  },
+  "group": {
+    "dataSource": "db",
+    "public": true
   }
 }
