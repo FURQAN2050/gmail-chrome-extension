@@ -14,7 +14,17 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "groups": {
+      "type": "hasMany",
+      "model": "group",
+      "foreignKey": "groupId",
+      "options": {
+        "nestRemoting": true
+      },
+      "through": "groupemail"
+    }
+  },
   "acls": [],
   "methods": {}
 }

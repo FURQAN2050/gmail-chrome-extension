@@ -50,5 +50,9 @@
   "group": {
     "dataSource": "db",
     "public": true
+  },
+  "groupemail": {
+    "dataSource": "db",
+    "public": true
   }
 }
