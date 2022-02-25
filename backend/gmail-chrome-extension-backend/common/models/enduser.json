@@ -23,6 +23,14 @@
       "options": {
         "nestRemoting": true
       }
+    },
+    "groups": {
+      "type": "hasMany",
+      "model": "group",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [],
