@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes } from '@angular/router';
-
+import {MatChipsModule} from '@angular/material/chips'; 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -42,6 +42,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatChipsModule,
     MatCheckboxModule,
     MatSnackBarModule,
     MatIconModule,
