@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEmailsModalComponent } from './add-emails-modal/add-emails-modal.component';
+import {GroupsService} from '../../services/groups/groups.service'
 
 @Component({
   selector: 'app-emails',
@@ -15,7 +16,20 @@ export class EmailsComponent implements OnInit {
     {position: 3, name: 'Smith@gmail.com', weight: 6.941, symbol: 'Li'},
     {position: 4, name: 'casan@gmail.com', weight: 9.0122, symbol: 'Be'},
   ];
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog ,public GroupsService:GroupsService) { 
+    this.getGroups();
+  }
+
+  getGroups(){
+    let filters={
+      where:{enduserId:2},
+      include:['emails']
+    }
+    this.GroupsService.lookupGroups(filters).then(res=>{
+      console.log(res);
+    });
+  }
+
   addEmails(){
     this.dialog.open(AddEmailsModalComponent, {
       height:"auto",

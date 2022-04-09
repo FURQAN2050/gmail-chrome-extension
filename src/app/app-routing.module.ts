@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { EmailsComponent } from './components/emails/emails.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import {AuthRouteGuardService as AuthGuard} from './services/auth-route-guard/auth-route-guard.service';
+
 
 const routes: Routes = [
-  { path: 'signup', component: SignupComponent },
+  { path: 'emails', component: EmailsComponent ,canActivate:[AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'emails', component: EmailsComponent },
+  { path: 'signup', component: SignupComponent },
   { path: '**', component: LoginComponent },
 ];
 @NgModule({

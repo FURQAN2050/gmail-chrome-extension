@@ -7,10 +7,8 @@ export class GroupsService {
 
   constructor(private GroupApi:GroupApi,private GroupemailApi: GroupemailApi ) { }
 
-  lookupGroups(filters:any){
-    this.GroupApi.find(filters).subscribe((res: any)=>{
-      console.log(res);
-    })
+  async lookupGroups(filters:any){
+    return this.GroupApi.find(filters).toPromise();
   }
 
   async upsertGroupEmailAPI(payload:any){

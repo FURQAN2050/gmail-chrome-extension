@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { LoginAuthenticationService } from 'src/app/services/loginAuthentication/login-authentication.service';
 import {EnduserApi,LoopBackAuth} from '../../shared/sdk'
 
 @Component({
@@ -14,6 +15,7 @@ model:any={}
     public _snackBar:MatSnackBar,
     public endUserAPI:EnduserApi,
     public auth: LoopBackAuth,
+    public basicAuthentication:LoginAuthenticationService
     ) { }
   logIn(){
     if(this.model.email && this.model.password){
@@ -21,6 +23,7 @@ model:any={}
         this.auth.save();
         let user: any = this.auth.getCurrentUserData();
         this.auth.setUser(user);
+        this.basicAuthentication.userAuthenticated(user);
         this.route.navigateByUrl('/emails');
       },err=>{
         alert('User name or password is incorrect');
