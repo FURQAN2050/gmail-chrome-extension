@@ -1,28 +1,24 @@
-.backGround{
-    background-color: #0096c7;
-    height: 100%;
-    width: 100%;
+.backGround {
+  background-color: #0096c7;
+  height: 100%;
+  width: 100%;
 }
-.color{
-    background-color: #0096c7;
-
-}
-
-.cardHeightWidth{
-    width: 80vw;
-    height: 80vh;
-
-}
-.gridHeight{
-    height: auto;
-    max-height: 550px;
-    min-height: 200px;
+.color {
+  background-color: #0096c7;
 }
 
-.margin{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.cardHeightWidth {
+  width: 80vw;
+  height: 80vh;
+}
+.gridHeight {
+  height: auto;
+  max-height: 550px;
+  min-height: 200px;
+}
 
-
+.margin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
