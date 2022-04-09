@@ -19,6 +19,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import { AddEmailsModalComponent } from './components/emails/add-emails-modal/add-emails-modal.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { SDKBrowserModule } from './shared/sdk/index';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -46,7 +49,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatSnackBarModule,
     MatIconModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule,
+    SDKBrowserModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

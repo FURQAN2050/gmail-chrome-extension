@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import {EnduserApi,LoopBackAuth} from '../../shared/sdk'
 
 @Component({
   selector: 'app-login',
@@ -9,14 +10,28 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 model:any={}
-  constructor(public route:Router,public _snackBar:MatSnackBar) { }
+  constructor(public route:Router,
+    public _snackBar:MatSnackBar,
+    public endUserAPI:EnduserApi,
+    public auth: LoopBackAuth,
+    ) { }
   logIn(){
-    if(this.model.email && this.model.password)
-    this.route.navigateByUrl('/emails')
-    else
-    this._snackBar.open('Please Enter Email Or Password', undefined, {
-      duration: 3000
-    });
+    if(this.model.email && this.model.password){
+      this.endUserAPI.login({ email: this.model.email, password: this.model.password }).subscribe(token => {
+        this.auth.save();
+        let user: any = this.auth.getCurrentUserData();
+        this.auth.setUser(user);
+        this.route.navigateByUrl('/emails');
+      },err=>{
+        alert('User name or password is incorrect');
+      })
+      
+    }
+    else{
+      this._snackBar.open('Please Enter Email Or Password', undefined, {
+        duration: 3000
+      });
+    }
   }
   signUp(){
     this.route.navigateByUrl('/signup')
