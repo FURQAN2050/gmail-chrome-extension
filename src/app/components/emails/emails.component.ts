@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEmailsModalComponent } from './add-emails-modal/add-emails-modal.component';
 import {GroupsService} from '../../services/groups/groups.service'
+import { LoginAuthenticationService } from 'src/app/services/loginAuthentication/login-authentication.service';
 
 @Component({
   selector: 'app-emails',
@@ -9,24 +10,24 @@ import {GroupsService} from '../../services/groups/groups.service'
   styleUrls: ['./emails.component.scss']
 })
 export class EmailsComponent implements OnInit {
-  displayedColumns: string[] = ['GroupName', 'Emails'];
-  ListData = [
-    {position: 1, name: 'John@gmail.com', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'Doe@gmail.com', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'Smith@gmail.com', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'casan@gmail.com', weight: 9.0122, symbol: 'Be'},
-  ];
-  constructor(public dialog: MatDialog ,public GroupsService:GroupsService) { 
-    this.getGroups();
+  displayedColumns: string[] = ['GroupName'];
+  currentUser:any=null;
+  ListData :any= [];
+  constructor(public dialog: MatDialog ,public GroupsService:GroupsService,public authentication:LoginAuthenticationService) {
+    this.authentication.getAuthObservable().subscribe(res=>{
+      this.currentUser=res;
+      this.getGroups(this.currentUser);
+    }) 
   }
 
-  getGroups(){
+  getGroups(user:any){
     let filters={
-      where:{enduserId:2},
+      where:{enduserId:user.id},
       include:['emails']
     }
     this.GroupsService.lookupGroups(filters).then(res=>{
       console.log(res);
+      this.ListData=res;
     });
   }
 
