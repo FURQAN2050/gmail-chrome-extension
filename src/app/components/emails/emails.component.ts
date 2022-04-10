@@ -10,7 +10,7 @@ import { LoginAuthenticationService } from 'src/app/services/loginAuthentication
   styleUrls: ['./emails.component.scss']
 })
 export class EmailsComponent implements OnInit {
-  displayedColumns: string[] = ['GroupName'];
+  displayedColumns: string[] = ['GROUPS'];
   currentUser:any=null;
   ListData :any= [];
   constructor(public dialog: MatDialog ,public GroupsService:GroupsService,public authentication:LoginAuthenticationService) {
