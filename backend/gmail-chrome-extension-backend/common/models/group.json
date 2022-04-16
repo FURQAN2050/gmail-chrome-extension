@@ -15,11 +15,12 @@
     "emails": {
       "type": "hasMany",
       "model": "email",
-      "foreignKey": "emailId",
+      "foreignKey": "groupId",
       "options": {
         "nestRemoting": true
       },
-      "through": "groupemail"
+      "through": "groupemail",
+      "keyThrough": "emailId"
     }
   },
   "acls": [],

@@ -3,7 +3,7 @@
     "host": "localhost",
     "port": 3306,
     "url": "",
-    "database": "gmail-extension",
+    "database": "gmail-extension2",
     "password": "",
     "name": "db",
     "connector": "mysql",
