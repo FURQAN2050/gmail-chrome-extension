@@ -6,6 +6,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import {AuthRouteGuardService as AuthGuard} from './services/auth-route-guard/auth-route-guard.service';
 
 
+
 const routes: Routes = [
   { path: 'emails', component: EmailsComponent ,canActivate:[AuthGuard] },
   { path: 'login', component: LoginComponent },
