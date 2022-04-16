@@ -69,7 +69,7 @@ export class Group implements GroupInterface {
           model: 'Email',
           relationType: 'hasMany',
           modelThrough: 'Groupemail',
-          keyThrough: 'emailId',
+          keyThrough: 'groupId',
           keyFrom: 'id',
           keyTo: 'emailId'
         },
