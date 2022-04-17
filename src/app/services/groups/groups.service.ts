@@ -30,15 +30,30 @@ export class GroupsService {
   }
 
   async upsertGroup(payload: any) {
-    if (payload.id) {
-      await this.GroupApi.create(payload).toPromise();
+    if (!payload.id) {
+      return await this.GroupApi.create(payload).toPromise();
     } else {
-      await this.GroupApi.updateAttributes(payload.id, payload).toPromise();
+      return await this.GroupApi.updateAttributes(
+        payload.id,
+        payload
+      ).toPromise();
     }
   }
 
-  async deleteGroupEmail(id: any) {
-    await this.GroupemailApi.deleteById(id).toPromise();
+  async deleteGroupEmail(emailId, groupId) {
+    console.log(emailId);
+    console.log(groupId);
+    return await this.GroupemailApi.find({
+      where: { and: [{ emailId: emailId, groupId: groupId }] },
+    })
+      .toPromise()
+      .then((res: any) => {
+        console.log(res);
+        if (res.length) {
+          console.log(res[0]);
+          this.GroupemailApi.deleteById(res[0].id).toPromise();
+        }
+      });
   }
 
   async upsertEmail(payload: any) {

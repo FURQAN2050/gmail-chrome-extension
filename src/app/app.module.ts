@@ -22,6 +22,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { SDKBrowserModule } from './shared/sdk/index';
 import { HttpClientModule } from '@angular/common/http';
 import { MatChipsModule } from '@angular/material/chips';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatOptionModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,7 @@ import { MatChipsModule } from '@angular/material/chips';
     SignupComponent,
     EmailsComponent,
     AddEmailsModalComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +54,9 @@ import { MatChipsModule } from '@angular/material/chips';
     HttpClientModule,
     SDKBrowserModule.forRoot(),
     MatChipsModule,
+    MatToolbarModule,
+    MatOptionModule,
+    MatAutocompleteModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
