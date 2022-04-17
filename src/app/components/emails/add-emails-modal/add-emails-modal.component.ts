@@ -85,10 +85,6 @@ export class AddEmailsModalComponent implements OnInit {
   }
 
   upsertGroup() {
-    console.log(this.emails);
-    this.addEmailToGroup();
-
-    return;
     let object = {};
     if (!this?.model?.id) {
       object = {
@@ -101,7 +97,7 @@ export class AddEmailsModalComponent implements OnInit {
     console.log(object);
     this.GroupsService.upsertGroup(object).then((res) => {
       this.success = true;
-      this.addEmailToGroup();
+      // this.addEmailToGroup();
 
       object = {};
       this.closeDialog();
