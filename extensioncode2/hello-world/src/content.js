@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { render } from "react-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-
-// import { App } from './react-components/react-main.js';
+import "./react-components/Login.css";
 
 startExtension();
 let Data = [];
@@ -12,18 +11,10 @@ let SDK = [];
 let COMPOSEVIEW = '';
 let EXISTIGNUSERID = '';
 let USERLOGGEDIN = false;
-// async function getData() {
-//   let response = await fetch('https://chrome.myprojectstaging.com:3000/api/groups?filter=%7B%22where%22%3A%20%7B%22enduserId%22%3A%221%22%7D%2C%22include%22%3A%5B%22emails%22%5D%7D');
-//   console.log(response);
-//   return response.json()
-// }
+let MODAL = ';';
 
 async function checkloggedIn() {
-  // this.getGroupData()
   return chrome.storage.sync.get(['userId']);
-  // if (userId) {
-  //   this.getGroupData(userId)
-  // }
 }
 
 
@@ -35,14 +26,11 @@ async function startExtension() {
   console.log('befre');
   let loggedInResponse = await checkloggedIn();
   console.log(loggedInResponse);
-  if (loggedInResponse) {
+  if (loggedInResponse.userId) {
     EXISTIGNUSERID = loggedInResponse.userId;
     USERLOGGEDIN = true;
   }
   console.log('after');
-  //let data = await (getData()) || [];
-  //Data = data;
-  //console.log(data);
 
   GmailDomComposer.registerComposeViewHandler(composeView => {
     console.log(composeView);
@@ -52,7 +40,7 @@ async function startExtension() {
       iconUrl: "https://lh5.googleusercontent.com/itq66nh65lfCick8cJ-OPuqZ8OUDTIxjCc25dkc4WUT1JG8XG3z6-eboCu63_uDXSqMnLRdlvQ=s128-h128-e365",
       onClick: function (event) {
 
-        sdk.Widgets.showModalView({
+        MODAL = sdk.Widgets.showModalView({
           title: 'Groups List',
           el: '<div id = "test-comp"></div> '//getData(),
         });
@@ -102,12 +90,14 @@ class Toggle extends React.Component {
     this.setPassword = this.setPassword.bind(this);
     this.getGroupData = this.getGroupData.bind(this);
     this.signout = this.signout.bind(this);
+    this.closeWidget = this.closeWidget.bind(this);
     //this.checkloggedIn();
     if (this.state.userId) {
       this.setState({ isloggedIn: true })
       this.getGroupData(this.state.userId);
     }
   }
+
   handleClick(group) {
     console.log(group);
     console.log(COMPOSEVIEW);
@@ -129,7 +119,7 @@ class Toggle extends React.Component {
 
   getGroupData(userId) {
     console.log(userId);
-    let response = fetch('https://chrome.myprojectstaging.com:3000/api/groups?filter=%7B%22where%22%3A%20%7B%22enduserId%22%3A%221%22%7D%2C%22include%22%3A%5B%22emails%22%5D%7D')
+    let response = fetch(`https://chrome.myprojectstaging.com:3000/api/groups?filter={"where": {"enduserId":${userId}},"include":["emails"]}`)
       .then(response => response.json())
       .then(res => {
         console.log(res);
@@ -165,23 +155,35 @@ class Toggle extends React.Component {
       .then(response => response.json())
       .then(res => {
         console.log(res);
-        this.setState({ isloggedIn: true })
-        this.setState({ user: res })
-        this.setState({ userId: res?.userId })
-        chrome.storage.sync.set({ userId: res.userId }, function () {
-          console.log('Value is set to ' + res.userId);
-        });
+        if (res.userId) {
+          this.setState({ isloggedIn: true })
+          this.setState({ user: res })
+          this.setState({ userId: res?.userId })
+          chrome.storage.sync.set({ userId: res.userId }, function () {
+            console.log('Value is set to ' + res.userId);
+          });
+          this.getGroupData(this.state.userId);
+        }
+      }).catch(err => {
+        alert('UserName or password is incorrect');
       });
   };
+
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
 
   signout() {
-    chrome.storage.local.set({ userId: null }, () => {
+    chrome.storage.sync.set({ userId: null }, () => {
       this.setState({ isloggedIn: false });
       EXISTIGNUSERID = null;
     })
+  }
+
+  closeWidget() {
+    if (MODAL) {
+      MODAL.close();
+    }
   }
 
 
@@ -216,33 +218,44 @@ class Toggle extends React.Component {
           <div style={flexContainer}>
             {groupsDataDiv}
           </div>
-          <Button block size="lg" onClick={this.signout}>
-            signout
-          </Button>
+          <button className="button-container-logout" onClick={this.signout}> Signout</button>
+          <button className="button-container-close" onClick={this.closeWidget}> Close</button>
+
         </div >
       );
     } else {
       return (
         <div className="Login">
+          <div className="title">Sign In</div>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group size="lg" controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                autoFocus
-                type="email"
-                onChange={this.setEmail.bind(this)}
-              />
+              <div className="input-container">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  autoFocus
+                  type="email"
+                  onChange={this.setEmail.bind(this)}
+                />
+              </div>
             </Form.Group>
             <Form.Group size="lg" controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                onChange={this.setPassword.bind(this)}
-              />
+              <div className="input-container">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  onChange={this.setPassword.bind(this)}
+                />
+              </div>
             </Form.Group>
-            <Button block size="lg" type="submit" disabled={!this.validateForm()}>
-              Login
-            </Button>
+            {/* <div className="button-container">
+              i
+              <Button block size="lg" type="submit" disabled={!this.validateForm()}>
+                Login
+              </Button>
+            </div> */}
+            <div className="button-container">
+              <input type="submit" disabled={!this.validateForm()} />
+            </div>
 
           </Form>
         </div>
