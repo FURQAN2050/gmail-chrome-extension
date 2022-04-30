@@ -30,20 +30,7 @@ function App() {
             <h1>Hello ,World</h1>
             <p>this is a simple Text</p>
         </div>
-    );;
-    // } else {
-    return;
-    // }
-
-    //getData
-
-    //return Render
-    // return (
-    //     <div>
-    //         <h1>Hello ,World</h1>
-    //         <p>this is a simple Text</p>
-    //     </div>
-    // );
+    );
 }
 
 export {
