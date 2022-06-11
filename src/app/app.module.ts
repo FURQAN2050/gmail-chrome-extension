@@ -26,6 +26,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { TemplatesComponent } from './components/templates/templates.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     EmailsComponent,
     AddEmailsModalComponent,
     NavbarComponent,
+    TemplatesComponent,
   ],
   imports: [
     BrowserModule,
