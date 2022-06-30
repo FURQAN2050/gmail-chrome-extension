@@ -48,7 +48,7 @@ export class EmailsComponent implements OnInit {
   getGroups(user: any) {
     let filters = {
       where: { enduserId: user.id },
-      include: ['emails'],
+      include: ['emails', 'templates'],
     };
     this.GroupsService.lookupGroups(filters).then((res) => {
       console.log(res);

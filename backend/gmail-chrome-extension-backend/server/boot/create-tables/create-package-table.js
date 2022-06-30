@@ -26,6 +26,15 @@ module.exports = function (app) {
         if (err) throw err;
         console.log("groupemail Table Created")
     });
+
+    ds.autoupdate('template', function (err) {
+        if (err) throw err;
+        console.log("template Table Created")
+    });
+    ds.autoupdate('grouptemplate', function (err) {
+        if (err) throw err;
+        console.log("grouptemplate Table Created")
+    });
     // ds.autoupdate('recipt', function (err) {
     //     if (err) throw err;
     //     console.log("recipt Table Created")

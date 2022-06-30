@@ -1,28 +1,32 @@
 {
-  "name": "email",
+  "name": "grouptemplate",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "email": {
-      "type": "string"
-    },
-    "nickname": {
-      "type": "string"
+    "date": {
+      "type": "date"
     }
   },
   "validations": [],
   "relations": {
-    "groups": {
-      "type": "hasMany",
+    "template": {
+      "type": "belongsTo",
+      "model": "template",
+      "foreignKey": "templateId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "group": {
+      "type": "belongsTo",
       "model": "group",
       "foreignKey": "groupId",
       "options": {
         "nestRemoting": true
-      },
-      "through": "groupemail"
+      }
     }
   },
   "acls": [],
