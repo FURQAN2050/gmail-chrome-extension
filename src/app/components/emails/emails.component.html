@@ -105,6 +105,34 @@
             <div class="col-md-12 col-lg-12">
               <br />
               <h1><b> Templates </b></h1>
+              
+
+              <mat-form-field>
+                <mat-chip-list #chipList>
+                  <mat-chip
+                      *ngFor="let template of chipSelectedTemplates"
+                      [selectable]=true
+                      [removable]=true
+                      (removed)="removeTemplate(template)">
+                      {{template.name}}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                      placeholder="Your Template"
+                      #templateInput
+                      [formControl]="templateControl"
+                      [matAutocomplete]="auto"
+                      [matChipInputFor]="chipList"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      [matChipInputAddOnBlur]=true
+                      (matChipInputTokenEnd)="addTemplate($event)">
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="templateSelected($event)">
+                  <mat-option *ngFor="let thisTemplateName of filteredTemplates | async" [value]="thisTemplateName">
+                      {{thisTemplateName}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
             </div>
           </div>
         </div>

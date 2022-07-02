@@ -15,9 +15,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailsComponent } from './components/emails/emails.component';
+import { TemplatesComponent } from './components/templates/templates.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { AddEmailsModalComponent } from './components/emails/add-emails-modal/add-emails-modal.component';
+import { AddTemplatesModalComponent } from './components/templates/add-templates-modal/add-templates-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SDKBrowserModule } from './shared/sdk/index';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,13 +28,15 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
+import { NgxEditorModule } from 'ngx-editor';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
     EmailsComponent,
+    TemplatesComponent,
+    AddTemplatesModalComponent,
     AddEmailsModalComponent,
     NavbarComponent,
   ],
@@ -57,6 +61,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatToolbarModule,
     MatOptionModule,
     MatAutocompleteModule,
+    NgxEditorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
