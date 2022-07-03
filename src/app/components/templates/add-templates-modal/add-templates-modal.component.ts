@@ -65,6 +65,7 @@ export class AddTemplatesModalComponent implements OnInit {
   // make sure to destory the editor
   ngOnDestroy(): void {
     this.editor.destroy();
+    this.emailEditor.editor.remove();
   }
 
   constructor(
@@ -80,11 +81,7 @@ export class AddTemplatesModalComponent implements OnInit {
     if (data) {
       const { template } = data;
       this.model = template;
-      console.log('abeyyy bhai' + template.html);
       this.html = template.html;
-      if (this.usenewEditor && this.model.design) {
-        this.emailEditor.editor.loadDesign(JSON.parse(this.model.design));
-      }
       // this.templates = groups.templates;
     }
 
@@ -158,7 +155,7 @@ export class AddTemplatesModalComponent implements OnInit {
   }
 
   closeDialog() {
-    if (this.success == true) {
+    if (this.success) {
       this.dialogRef.close({
         success: this.success,
         data: { name: this.model.name, html: this.doc.value },
@@ -170,13 +167,15 @@ export class AddTemplatesModalComponent implements OnInit {
     }
   }
 
-  editorLoaded(event) {
+  editorLoaded() {
     console.log('editorLoaded');
     // load the design json here
-    console.log();
-    // this.emailEditor.editor.loadDesign(
-
-    // );
+    console.log(this.model.design);
+    if (this.model.design) {
+      this.emailEditor.editor.loadDesign(JSON.parse(this.model.design));
+    } else {
+      this.emailEditor.editor.loadDesign();
+    }
   }
 
   // called when the editor has finished loading
@@ -207,7 +206,7 @@ export class AddTemplatesModalComponent implements OnInit {
           this.success = true;
           object = {};
           this.model = {};
-          this.closeDialog();
+          location.reload();
         });
       });
     });
