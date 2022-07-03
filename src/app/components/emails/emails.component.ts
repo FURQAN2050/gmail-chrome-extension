@@ -76,10 +76,7 @@ export class EmailsComponent implements OnInit {
   addEmails() {
     let dialogRef = this.dialog.open(AddEmailsModalComponent, {
       height: 'auto',
-      width: '50vw',
-      // data: {
-      //   animal: 'panda',
-      // },
+      width: '50vw'
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result.success) {

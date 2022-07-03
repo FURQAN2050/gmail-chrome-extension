@@ -27,6 +27,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { TemplatesComponent } from './components/templates/templates.component';
+import { EmailEditorModule } from 'angular-email-editor';
+import { AddTemplateModalComponent } from './components/templates/add-template-modal/add-template-modal.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { TemplatesComponent } from './components/templates/templates.component';
     AddEmailsModalComponent,
     NavbarComponent,
     TemplatesComponent,
+    AddTemplateModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,7 @@ import { TemplatesComponent } from './components/templates/templates.component';
     MatToolbarModule,
     MatOptionModule,
     MatAutocompleteModule,
+    EmailEditorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

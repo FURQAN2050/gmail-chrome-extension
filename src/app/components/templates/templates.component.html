@@ -1,1 +1,36 @@
-<p>templates works!</p>
+<div class="container">
+  <h1 class="font-weight-bold">
+    Add Template
+    <button
+      mat-mini-fab
+      class="color"
+      aria-label="Example icon button with a menu icon"
+    >
+      <mat-icon (click)="addTemplate()">add</mat-icon>
+    </button>
+  </h1>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="editTemplate">
+      <th mat-header-cell *matHeaderCellDef>Edit</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-raised-button
+          mat-button
+          color="primary"
+          (click)="upsertTemplate($event, element)"
+        >
+          Edit
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

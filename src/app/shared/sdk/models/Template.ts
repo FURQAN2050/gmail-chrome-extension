@@ -4,6 +4,8 @@ declare var Object: any;
 export interface TemplateInterface {
   "template"?: string;
   "name"?: string;
+  "design"?: string;
+  "html"?: string;
   "id"?: number;
   "enduserId"?: number;
 }
@@ -11,6 +13,8 @@ export interface TemplateInterface {
 export class Template implements TemplateInterface {
   "template": string;
   "name": string;
+  "design": string;
+  "html": string;
   "id": number;
   "enduserId": number;
   constructor(data?: TemplateInterface) {
@@ -52,6 +56,14 @@ export class Template implements TemplateInterface {
         },
         "name": {
           name: 'name',
+          type: 'string'
+        },
+        "design": {
+          name: 'design',
+          type: 'string'
+        },
+        "html": {
+          name: 'html',
           type: 'string'
         },
         "id": {
