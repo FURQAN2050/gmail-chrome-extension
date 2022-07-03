@@ -47,8 +47,8 @@ export class TemplatesComponent implements OnInit {
   ngOnInit(): void {}
 
   getTemplates(user: any) {
-    console.log("get Template Called");
-  //      console.log(this.templates);
+    console.log('get Template Called');
+    //      console.log(this.templates);
     let filters = {
       where: { enduserId: user.id },
       include: ['emails'],
@@ -59,8 +59,7 @@ export class TemplatesComponent implements OnInit {
     // });
     this.dataSource = [...this.templates];
 
-    console.log("gdataSource");
-   
+    console.log('gdataSource');
   }
 
   upsertTemplates(event, element) {
@@ -89,7 +88,7 @@ export class TemplatesComponent implements OnInit {
       console.log(result);
       if (result.success && result.data) {
         this.templates.push(result.data);
-        console.log("template iss");
+        console.log('template iss');
         console.log(this.templates);
         this.getTemplates(this.currentUser);
       }

@@ -1,14 +1,14 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Google Chrome Extension",
   "version": "1.0",
   "permissions": [
-    "https://mail.google.com/",
-    "https://inbox.google.com/",
-    "https://api.pipl.com/",
-    "https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"
+    "scripting",
+    "tabs"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": [
@@ -21,8 +21,21 @@
       ]
     }
   ],
+  "host_permissions": [
+    "https://inbox.google.com/",
+    "https://api.pipl.com/",
+    "https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"
+  ],
   "web_accessible_resources": [
-    "icon.png"
+    {
+      "resources": [
+        "icon.png"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ]
+    }
   ],
   "icons": {
     "128": "icon.png"

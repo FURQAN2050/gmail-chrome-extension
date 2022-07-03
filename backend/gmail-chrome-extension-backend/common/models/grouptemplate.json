@@ -1,0 +1,34 @@
+{
+  "name": "grouptemplate",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "date": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "template": {
+      "type": "belongsTo",
+      "model": "template",
+      "foreignKey": "templateId",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "group": {
+      "type": "belongsTo",
+      "model": "group",
+      "foreignKey": "groupId",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

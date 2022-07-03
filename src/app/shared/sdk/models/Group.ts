@@ -1,6 +1,7 @@
 /* tslint:disable */
 import {
-  Email
+  Email,
+  Template
 } from '../index';
 
 declare var Object: any;
@@ -9,6 +10,7 @@ export interface GroupInterface {
   "id"?: number;
   "enduserId"?: number;
   emails?: Email[];
+  templates?: Template[];
 }
 
 export class Group implements GroupInterface {
@@ -16,6 +18,7 @@ export class Group implements GroupInterface {
   "id": number;
   "enduserId": number;
   emails: Email[];
+  templates: Template[];
   constructor(data?: GroupInterface) {
     Object.assign(this, data);
   }
@@ -69,9 +72,19 @@ export class Group implements GroupInterface {
           model: 'Email',
           relationType: 'hasMany',
           modelThrough: 'Groupemail',
-          keyThrough: 'groupId',
+          keyThrough: 'emailId',
           keyFrom: 'id',
-          keyTo: 'emailId'
+          keyTo: 'groupId'
+        },
+        templates: {
+          name: 'templates',
+          type: 'Template[]',
+          model: 'Template',
+          relationType: 'hasMany',
+          modelThrough: 'Grouptemplate',
+          keyThrough: 'templateId',
+          keyFrom: 'id',
+          keyTo: 'groupId'
         },
       }
     }

@@ -21,6 +21,16 @@
       },
       "through": "groupemail",
       "keyThrough": "emailId"
+    },
+    "templates": {
+      "type": "hasMany",
+      "model": "template",
+      "foreignKey": "groupId",
+      "options": {
+        "nestRemoting": true
+      },
+      "through": "grouptemplate",
+      "keyThrough": "templateId"
     }
   },
   "acls": [],
