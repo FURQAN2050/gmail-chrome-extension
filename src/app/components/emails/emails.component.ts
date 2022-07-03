@@ -1,4 +1,3 @@
-import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEmailsModalComponent } from './add-emails-modal/add-emails-modal.component';
 import { GroupsService } from '../../services/groups/groups.service';
@@ -10,7 +9,16 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 import { EmailApi } from 'src/app/shared/sdk';
+import {  Input, EventEmitter, Output } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-emails',
@@ -33,6 +41,24 @@ export class EmailsComponent implements OnInit {
   expandedElement: any | null;
   addNewEmail = '';
   currentUser: any = null;
+
+  public allTemplates: any[] = [
+    { name: 'Template 1', id: 1 },
+    { name: 'Template 2', id: 2 },
+    { name: 'Template 3', id: 3 },
+  ];
+  public chipSelectedTemplates: any[] = [];
+  public filteredTemplates: Observable<String[]>;
+
+
+  private allowFreeTextAddTemplate = false;
+
+  public templateControl = new FormControl();
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  
+  @ViewChild('templateInput') templateInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
   constructor(
     public dialog: MatDialog,
     public GroupsService: GroupsService,
@@ -42,8 +68,93 @@ export class EmailsComponent implements OnInit {
       this.currentUser = res;
       this.getGroups(this.currentUser);
     });
+   }
+
+  ngOnInit(): void {
+    this.filteredTemplates = this.templateControl.valueChanges.pipe(
+      startWith(null),
+      map(templateName => this.filterOnValueChange(templateName))
+    );
   }
-  ngOnInit(): void {}
+
+  public addTemplate(event: MatChipInputEvent): void {
+    if (!this.allowFreeTextAddTemplate) {
+      // only allowed to select from the filtered autocomplete list
+      console.log('allowFreeTextAddTemplate is false');
+      return;
+    }
+
+    //
+    // Only add when MatAutocomplete is not open
+    // To make sure this does not conflict with OptionSelected Event
+    //
+    if (this.matAutocomplete.isOpen) {
+      return;
+    }
+
+     // Add our template
+     const value = event.value;
+     if ((value || '').trim()) {
+      this.selectTemplateByName(value.trim());
+    }
+
+    this.resetInputs();
+  }
+
+  public removeTemplate(template: any): void {
+    const index = this.chipSelectedTemplates.indexOf(template);
+    if (index >= 0) {
+      this.chipSelectedTemplates.splice(index, 1);
+      this.resetInputs();
+    }
+  }
+
+  public templateSelected(event: MatAutocompleteSelectedEvent): void {
+    this.selectTemplateByName(event.option.value);
+    this.resetInputs();
+  }
+
+  private resetInputs() {
+    // clear input element
+    this.templateInput.nativeElement.value = '';
+    // clear control value and trigger templateControl.valueChanges event 
+    this.templateControl.setValue(null); 
+  }
+
+  private filterOnValueChange(templateName: string | null): String[] {
+    let result: String[] = [];
+    
+    let allTemplatesLessSelected = this.allTemplates.filter(template => this.chipSelectedTemplates.indexOf(template) < 0);
+    if (templateName) {
+      result = this.filterTemplate(allTemplatesLessSelected, templateName);
+    } else {
+      result = allTemplatesLessSelected.map(template => template.name);
+    }
+    return result;
+  }
+
+  private filterTemplate(templateList: any[], templateName: String): String[] {
+    let filteredTemplateList: any[] = [];
+    const filterValue = templateName.toLowerCase();
+    let templatesMatchingTemplateName = templateList.filter(template => template.name.toLowerCase().indexOf(filterValue) === 0);
+    if (templatesMatchingTemplateName.length || this.allowFreeTextAddTemplate) {
+      
+      filteredTemplateList = templatesMatchingTemplateName;
+    } else {
+      filteredTemplateList = templateList;
+    }
+    return filteredTemplateList.map(template => template.name);
+  }
+
+  private selectTemplateByName(templateName) {
+    let foundTemplate = this.allTemplates.filter(template => template.name == templateName);
+    if (foundTemplate.length) {
+      this.chipSelectedTemplates.push(foundTemplate[0]);
+    } else {
+      let highestTemplateId = Math.max(...this.chipSelectedTemplates.map(template => template.id), 0);
+      this.chipSelectedTemplates.push({ name: templateName, id: highestTemplateId + 1 });
+    }
+  }
 
   getGroups(user: any) {
     let filters = {

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EmailsComponent } from './components/emails/emails.component';
 import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
 import { TemplatesComponent } from './components/templates/templates.component';
+import { SignupComponent } from './components/signup/signup.component';
 import { AuthRouteGuardService as AuthGuard } from './services/auth-route-guard/auth-route-guard.service';
 
 const routes: Routes = [

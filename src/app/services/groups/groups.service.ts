@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { EmailApi, GroupApi, GroupemailApi } from '../../shared/sdk';
+import {
+  EmailApi,
+  GroupApi,
+  GroupemailApi,
+  TemplateApi,
+} from '../../shared/sdk';
 @Injectable({
   providedIn: 'root',
 })
@@ -7,7 +12,8 @@ export class GroupsService {
   constructor(
     public EmailApi: EmailApi,
     private GroupApi: GroupApi,
-    private GroupemailApi: GroupemailApi
+    private GroupemailApi: GroupemailApi,
+    private TemplateApi: TemplateApi
   ) {}
 
   async lookupGroups(filters: any) {
@@ -17,6 +23,10 @@ export class GroupsService {
         console.log(res);
       });
     return this.GroupApi.find(filters).toPromise();
+  }
+
+  async lookupTemplates(filters: any) {
+    return this.TemplateApi.find(filters).toPromise();
   }
 
   async upsertGroupEmailAPI(payload: any) {
@@ -60,5 +70,16 @@ export class GroupsService {
     const { id } = payload;
     if (!id) return await this.EmailApi.create(payload).toPromise();
     else return await this.EmailApi.updateAttributes(id, payload).toPromise();
+  }
+
+  async upsertTemplate(payload: any) {
+    if (!payload.id) {
+      return await this.TemplateApi.create(payload).toPromise();
+    } else {
+      return await this.TemplateApi.updateAttributes(
+        payload.id,
+        payload
+      ).toPromise();
+    }
   }
 }

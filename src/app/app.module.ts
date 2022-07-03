@@ -18,6 +18,7 @@ import { EmailsComponent } from './components/emails/emails.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { AddEmailsModalComponent } from './components/emails/add-emails-modal/add-emails-modal.component';
+import { AddTemplatesModalComponent } from './components/templates/add-templates-modal/add-templates-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SDKBrowserModule } from './shared/sdk/index';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,6 +27,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgxEditorModule } from 'ngx-editor';
 import { TemplatesComponent } from './components/templates/templates.component';
 import { EmailEditorModule } from 'angular-email-editor';
 import { AddTemplateModalComponent } from './components/templates/add-template-modal/add-template-modal.component';
@@ -36,6 +38,8 @@ import { AddTemplateModalComponent } from './components/templates/add-template-m
     LoginComponent,
     SignupComponent,
     EmailsComponent,
+    TemplatesComponent,
+    AddTemplatesModalComponent,
     AddEmailsModalComponent,
     NavbarComponent,
     TemplatesComponent,
@@ -62,6 +66,7 @@ import { AddTemplateModalComponent } from './components/templates/add-template-m
     MatToolbarModule,
     MatOptionModule,
     MatAutocompleteModule,
+    NgxEditorModule,
     EmailEditorModule,
   ],
   providers: [],
