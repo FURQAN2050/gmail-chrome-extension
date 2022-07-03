@@ -3,6 +3,7 @@ import {
   EmailApi,
   GroupApi,
   GroupemailApi,
+  GrouptemplateApi,
   TemplateApi,
 } from '../../shared/sdk';
 @Injectable({
@@ -13,7 +14,8 @@ export class GroupsService {
     public EmailApi: EmailApi,
     private GroupApi: GroupApi,
     private GroupemailApi: GroupemailApi,
-    private TemplateApi: TemplateApi
+    private TemplateApi: TemplateApi,
+    private GroupTemplateApi: GrouptemplateApi
   ) {}
 
   async lookupGroups(filters: any) {
@@ -36,6 +38,15 @@ export class GroupsService {
     for (let i = 0; i < payload.length; i++) {
       let groupEmail = payload[i];
       await this.GroupemailApi.create(groupEmail).toPromise();
+    }
+  }
+  async upsertGroupTemplateAPI(payload: any) {
+    if (!(payload instanceof Array)) {
+      payload = [payload];
+    }
+    for (let i = 0; i < payload.length; i++) {
+      let groupEmail = payload[i];
+      await this.GroupTemplateApi.create(groupEmail).toPromise();
     }
   }
 

@@ -165,6 +165,7 @@ export class AddTemplatesModalComponent implements OnInit {
         success: this.success,
       });
     }
+    location.reload();
   }
 
   editorLoaded() {
@@ -187,7 +188,7 @@ export class AddTemplatesModalComponent implements OnInit {
     this.emailEditor.editor.saveDesign((design) => {
       let templateDesign = JSON.stringify(design);
       this.emailEditor.editor.exportHtml((html) => {
-        let templateHtml = JSON.stringify(html);
+        let templateHtml = JSON.stringify(html.html);
         if (!templateHtml) {
           alert('please add some line in the template before save');
           return;
@@ -206,7 +207,7 @@ export class AddTemplatesModalComponent implements OnInit {
           this.success = true;
           object = {};
           this.model = {};
-          location.reload();
+          this.closeDialog();
         });
       });
     });

@@ -9,15 +9,18 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import {
+  MatAutocompleteSelectedEvent,
+  MatAutocomplete,
+} from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { EmailApi } from 'src/app/shared/sdk';
-import {  Input, EventEmitter, Output } from '@angular/core';
+import { Input, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -42,20 +45,15 @@ export class EmailsComponent implements OnInit {
   addNewEmail = '';
   currentUser: any = null;
 
-  public allTemplates: any[] = [
-    { name: 'Template 1', id: 1 },
-    { name: 'Template 2', id: 2 },
-    { name: 'Template 3', id: 3 },
-  ];
+  public allTemplates: any[] = [];
   public chipSelectedTemplates: any[] = [];
   public filteredTemplates: Observable<String[]>;
-
 
   private allowFreeTextAddTemplate = false;
 
   public templateControl = new FormControl();
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  
+
   @ViewChild('templateInput') templateInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
@@ -67,13 +65,14 @@ export class EmailsComponent implements OnInit {
     this.authentication.getAuthObservable().subscribe((res) => {
       this.currentUser = res;
       this.getGroups(this.currentUser);
+      this.getTemplates(this.currentUser);
     });
-   }
+  }
 
   ngOnInit(): void {
     this.filteredTemplates = this.templateControl.valueChanges.pipe(
       startWith(null),
-      map(templateName => this.filterOnValueChange(templateName))
+      map((templateName) => this.filterOnValueChange(templateName))
     );
   }
 
@@ -92,13 +91,24 @@ export class EmailsComponent implements OnInit {
       return;
     }
 
-     // Add our template
-     const value = event.value;
-     if ((value || '').trim()) {
+    // Add our template
+    const value = event.value;
+    if ((value || '').trim()) {
       this.selectTemplateByName(value.trim());
     }
 
     this.resetInputs();
+  }
+
+  getTemplates(user) {
+    console.log('get Template Called');
+    let filters = {
+      where: { enduserId: user.id },
+    };
+    this.GroupsService.lookupTemplates(filters).then((res) => {
+      console.log(res);
+      this.allTemplates = res;
+    });
   }
 
   public removeTemplate(template: any): void {
@@ -117,18 +127,20 @@ export class EmailsComponent implements OnInit {
   private resetInputs() {
     // clear input element
     this.templateInput.nativeElement.value = '';
-    // clear control value and trigger templateControl.valueChanges event 
-    this.templateControl.setValue(null); 
+    // clear control value and trigger templateControl.valueChanges event
+    this.templateControl.setValue(null);
   }
 
   private filterOnValueChange(templateName: string | null): String[] {
     let result: String[] = [];
-    
-    let allTemplatesLessSelected = this.allTemplates.filter(template => this.chipSelectedTemplates.indexOf(template) < 0);
+
+    let allTemplatesLessSelected = this.allTemplates.filter(
+      (template) => this.chipSelectedTemplates.indexOf(template) < 0
+    );
     if (templateName) {
       result = this.filterTemplate(allTemplatesLessSelected, templateName);
     } else {
-      result = allTemplatesLessSelected.map(template => template.name);
+      result = allTemplatesLessSelected.map((template) => template.name);
     }
     return result;
   }
@@ -136,23 +148,32 @@ export class EmailsComponent implements OnInit {
   private filterTemplate(templateList: any[], templateName: String): String[] {
     let filteredTemplateList: any[] = [];
     const filterValue = templateName.toLowerCase();
-    let templatesMatchingTemplateName = templateList.filter(template => template.name.toLowerCase().indexOf(filterValue) === 0);
+    let templatesMatchingTemplateName = templateList.filter(
+      (template) => template.name.toLowerCase().indexOf(filterValue) === 0
+    );
     if (templatesMatchingTemplateName.length || this.allowFreeTextAddTemplate) {
-      
       filteredTemplateList = templatesMatchingTemplateName;
     } else {
       filteredTemplateList = templateList;
     }
-    return filteredTemplateList.map(template => template.name);
+    return filteredTemplateList.map((template) => template.name);
   }
 
   private selectTemplateByName(templateName) {
-    let foundTemplate = this.allTemplates.filter(template => template.name == templateName);
+    let foundTemplate = this.allTemplates.filter(
+      (template) => template.name == templateName
+    );
     if (foundTemplate.length) {
       this.chipSelectedTemplates.push(foundTemplate[0]);
     } else {
-      let highestTemplateId = Math.max(...this.chipSelectedTemplates.map(template => template.id), 0);
-      this.chipSelectedTemplates.push({ name: templateName, id: highestTemplateId + 1 });
+      let highestTemplateId = Math.max(
+        ...this.chipSelectedTemplates.map((template) => template.id),
+        0
+      );
+      this.chipSelectedTemplates.push({
+        name: templateName,
+        id: highestTemplateId + 1,
+      });
     }
   }
 
@@ -187,7 +208,7 @@ export class EmailsComponent implements OnInit {
   addEmails() {
     let dialogRef = this.dialog.open(AddEmailsModalComponent, {
       height: 'auto',
-      width: '50vw'
+      width: '50vw',
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result.success) {
