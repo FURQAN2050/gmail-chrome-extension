@@ -10,6 +10,7 @@ import { GroupsService } from 'src/app/services/groups/groups.service';
 import { LoginAuthenticationService } from 'src/app/services/loginAuthentication/login-authentication.service';
 import { Validators, Editor, Toolbar } from 'ngx-editor';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { EmailEditorComponent } from 'angular-email-editor';
 
 @Component({
   selector: 'app-add-templates-modal',
@@ -17,6 +18,10 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./add-templates-modal.component.scss'],
 })
 export class AddTemplatesModalComponent implements OnInit {
+  usenewEditor = true;
+  @ViewChild(EmailEditorComponent)
+  private emailEditor: EmailEditorComponent;
+
   model: any = {};
   editor: Editor;
   templateRichText: '<b>hello world</b>';
@@ -51,7 +56,6 @@ export class AddTemplatesModalComponent implements OnInit {
 
   get doc(): AbstractControl {
     return this.form.get('editorContent');
-
   }
 
   ngOnInit(): void {
@@ -62,7 +66,7 @@ export class AddTemplatesModalComponent implements OnInit {
   ngOnDestroy(): void {
     this.editor.destroy();
   }
-  
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AddTemplatesModalComponent>,
@@ -72,14 +76,18 @@ export class AddTemplatesModalComponent implements OnInit {
     this.LoginAuthenticationService.getAuthObservable().subscribe((res) => {
       this.currentUser = res;
     });
+
     if (data) {
-      
       const { template } = data;
       this.model = template;
-      console.log("abeyyy bhai" + template.html);
+      console.log('abeyyy bhai' + template.html);
       this.html = template.html;
-     // this.templates = groups.templates;
+      if (this.usenewEditor && this.model.design) {
+        this.emailEditor.editor.loadDesign(JSON.parse(this.model.design));
+      }
+      // this.templates = groups.templates;
     }
+
     this.filteredTemplates = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
       map((fruit: string | null) =>
@@ -124,39 +132,85 @@ export class AddTemplatesModalComponent implements OnInit {
   }
 
   upsertTemplate() {
-    let object = {};
-    if (!this?.model?.id) {
-      object = {
-        name: this.model.name,
-        enduserId: this.currentUser.id,
-      };
-    } else {
-      object = this.model;
+    if (!this.doc.value) {
+      alert('please add some line in the template before save');
+      return;
     }
-    console.log(object);
-    this.success = true;
-    this.closeDialog();
-    // this.GroupsService.upsertGroup(object).then((res) => {
-    //   this.success = true;
 
-    //   object = {};
-    //   this.closeDialog();
-    // });
+    let object: any = {};
+    object.name = this.model.name;
+    object.enduserId = this.currentUser.id;
+    if (this.model.id) object.id = this.model.id;
+    object.html = this.doc.value;
+
+    console.log(object);
+
+    this.GroupsService.upsertTemplate(object).then((res) => {
+      this.success = true;
+      object = {};
+      this.model = {};
+      this.closeDialog();
+    });
+
+    // console.log(object);
+    // this.success = true;
+    // this.closeDialog();
   }
 
   closeDialog() {
-    if(this.success == true){
-      this.dialogRef.close({ 
-        success: this.success, 
-        data : { name: this.model.name, html: this.doc.value}
+    if (this.success == true) {
+      this.dialogRef.close({
+        success: this.success,
+        data: { name: this.model.name, html: this.doc.value },
+      });
+    } else {
+      this.dialogRef.close({
+        success: this.success,
       });
     }
-    else{
-      this.dialogRef.close({ 
-        success: this.success  
+  }
+
+  editorLoaded(event) {
+    console.log('editorLoaded');
+    // load the design json here
+    console.log();
+    // this.emailEditor.editor.loadDesign(
+
+    // );
+  }
+
+  // called when the editor has finished loading
+  editorReady() {
+    console.log('editorReady');
+  }
+
+  exportHtml() {
+    this.emailEditor.editor.saveDesign((design) => {
+      let templateDesign = JSON.stringify(design);
+      this.emailEditor.editor.exportHtml((html) => {
+        let templateHtml = JSON.stringify(html);
+        if (!templateHtml) {
+          alert('please add some line in the template before save');
+          return;
+        }
+
+        let object: any = {};
+        object.name = this.model.name;
+        object.enduserId = this.currentUser.id;
+        if (this.model.id) object.id = this.model.id;
+        object.html = templateHtml;
+        object.design = templateDesign;
+
+        console.log(object);
+
+        this.GroupsService.upsertTemplate(object).then((res) => {
+          this.success = true;
+          object = {};
+          this.model = {};
+          this.closeDialog();
+        });
       });
-    }
-    
+    });
   }
 
   //ngOnInit(): void {}

@@ -11,6 +11,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { EmailApi } from 'src/app/shared/sdk';
+import { AddTemplateModalComponent } from './add-template-modal/add-template-modal.component';
 
 @Component({
   selector: 'app-templates',
@@ -48,18 +49,13 @@ export class TemplatesComponent implements OnInit {
 
   getTemplates(user: any) {
     console.log('get Template Called');
-    //      console.log(this.templates);
     let filters = {
       where: { enduserId: user.id },
-      include: ['emails'],
     };
-    // this.GroupsService.lookupGroups(filters).then((res) => {
-    //   console.log(res);
-    //   this.dataSource = res;
-    // });
-    this.dataSource = [...this.templates];
-
-    console.log('gdataSource');
+    this.GroupsService.lookupTemplates(filters).then((res) => {
+      console.log(res);
+      this.dataSource = res;
+    });
   }
 
   upsertTemplates(event, element) {
@@ -67,7 +63,6 @@ export class TemplatesComponent implements OnInit {
     console.log(element);
     let dialogRef = this.dialog.open(AddTemplatesModalComponent, {
       height: 'auto',
-      width: '60vw',
       data: {
         template: element,
       },
@@ -82,14 +77,13 @@ export class TemplatesComponent implements OnInit {
   addTemplates() {
     let dialogRef = this.dialog.open(AddTemplatesModalComponent, {
       height: 'auto',
-      width: '60vw',
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
       if (result.success && result.data) {
-        this.templates.push(result.data);
-        console.log('template iss');
-        console.log(this.templates);
+        // this.templates.push(result.data);
+        // console.log('template iss');
+        // console.log(this.templates);
         this.getTemplates(this.currentUser);
       }
     });
