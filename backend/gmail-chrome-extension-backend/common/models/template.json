@@ -13,10 +13,16 @@
       "type": "string"
     },
     "design": {
-      "type": "string"
+      "type": "string",
+      "mysql": {
+        "dataType": "LONGTEXT"
+      }
     },
     "html": {
-      "type": "string"
+      "type": "string",
+      "mysql": {
+        "dataType": "LONGTEXT"
+      }
     }
   },
   "validations": [],
