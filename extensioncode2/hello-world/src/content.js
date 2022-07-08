@@ -229,27 +229,48 @@ class Toggle extends React.Component {
       "margin": "10px",
       "background-color": "#04AA6D",
       "border-radius": "16px",
-      "height": "30px",
-      "background": "white"
+      "background": "white",
     }
+    const mainDivBorder = {
+      "border-right": "1px solid black",
+      "margin": "2px",
+      "padding": "2px",
+      "width": "151px"
+
+      // "margin": "30px",
+      // "display": "flex",
+      // "flex-direction": "row",
+      // "width": "300px",
+      // "height": "150px",
+      // "padding": "5px;",
+      // "flex": "1 1 auto",
+      // "border": "1px black solid",
+      // "text-align": "center",
+      // "margin": "5px;"
+    };
     const flexContainer = {
       "display": "flex",
-      "flex-wrap": "nowrap",
-      "border": "2px solid black"
+      "flex-wrap": "wrap",
+      "overflow": "scroll",
+    };
+    const heading = {
+      "font-weight": "bold",
+      "text-decoration-line": "underline"
     }
     for (let i = 0; i < this.state.data.length; i++) {
       console.log(this.state.data[i]);
       let group = this.state.data[i].name;
       console.log(group);
       groupsDataDiv.push(
-        <div>
+        <div style={mainDivBorder}>
+          <h3 style={heading}>Group</h3>
           <button style={style} onClick={() => this.handleClick(this.state.data[i])}>
             {group}
           </button>
+          <h3 style={heading}>Templates</h3>
           <div>
             {this.showGroupTemplates(this.state.data[i].templates)}
           </div>
-
         </div>
       );
     }
