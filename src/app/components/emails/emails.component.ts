@@ -82,7 +82,6 @@ export class EmailsComponent implements OnInit {
       console.log('allowFreeTextAddTemplate is false');
       return;
     }
-
     //
     // Only add when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
@@ -111,15 +110,26 @@ export class EmailsComponent implements OnInit {
     });
   }
 
-  public removeTemplate(template: any): void {
+  public removeTemplate(template: any, groupId): void {
+    console.log("template");
+    console.log(template);
     const index = this.chipSelectedTemplates.indexOf(template);
     if (index >= 0) {
       this.chipSelectedTemplates.splice(index, 1);
       this.resetInputs();
     }
+    this.removeTemplateFromGroup(template.id, groupId);
   }
 
-  public templateSelected(event: MatAutocompleteSelectedEvent): void {
+  public templateSelected(event: MatAutocompleteSelectedEvent, groupId): void {
+    
+    const selectedTemplate = this.allTemplates.filter((res)=> {
+      return res.name === event.option.value;
+    });
+    console.log(selectedTemplate);
+    console.log(groupId);
+    this.addTemplatetoGroup(groupId, selectedTemplate[0].id);
+
     this.selectTemplateByName(event.option.value);
     this.resetInputs();
   }
@@ -181,6 +191,7 @@ export class EmailsComponent implements OnInit {
     let filters = {
       where: { enduserId: user.id },
       include: ['emails', 'templates'],
+      order: 'id DESC'
     };
     this.GroupsService.lookupGroups(filters).then((res) => {
       console.log(res);
@@ -218,17 +229,41 @@ export class EmailsComponent implements OnInit {
   }
 
   removeEmail(email, group) {
-    console.log(email);
-    console.log(group);
-    this.GroupsService.deleteGroupEmail(email.id, group.id).then((res) => {
-      this.getGroups(this.currentUser);
+    this.GroupsService.getGroupEmailId(email.id, group.id)
+    .then((response: any)=>{
+      if(response){
+        this.GroupsService.deleteGroupEmail(response[0].id).then((res) => {
+        this.getGroups(this.currentUser);
+        });
+      }
     });
+    
+
+
+  }
+
+  expensionFunc(element){
+    this.chipSelectedTemplates = [...element.templates];
+  }
+  removeTemplateFromGroup(templateId, groupId) {
+    
+    this.GroupsService.getGroupTemplateId(templateId, groupId)
+    .then((response: any)=>{
+      if(response){
+        this.GroupsService.deleteGroupTemplate(response[0].id).then((res) => {
+      
+          this.getGroups(this.currentUser);
+    
+        });
+      }
+    });
+    
   }
 
   addEmail(group) {
-    console.log(this.addNewEmail);
-    console.log(group);
-    console.log(this.currentUser);
+    // console.log(this.addNewEmail);
+    // console.log(group);
+    // console.log(this.currentUser);
 
     let createEmailPayload = {
       email: this.addNewEmail,
@@ -247,5 +282,21 @@ export class EmailsComponent implements OnInit {
       this.getGroups(this.currentUser);
       this.addNewEmail = '';
     });
+  }
+
+  addTemplatetoGroup(groupId, templateId) {
+    //first need to create the email.
+
+    let groupTemplatePayload = {
+      templateId: templateId,
+      groupId: groupId,
+      enduserId: this.currentUser.id,
+    };
+    this.GroupsService.upsertGroupTemplateAPI(groupTemplatePayload)
+    .then((res) =>{
+      this.getGroups(this.currentUser);
+    });
+    
+   
   }
 }

@@ -51,6 +51,7 @@ export class TemplatesComponent implements OnInit {
     console.log('get Template Called');
     let filters = {
       where: { enduserId: user.id },
+      order: 'id DESC'
     };
     this.GroupsService.lookupTemplates(filters).then((res) => {
       console.log(res);
@@ -89,13 +90,13 @@ export class TemplatesComponent implements OnInit {
     });
   }
 
-  removeTemplate(template, group) {
-    console.log(template);
-    console.log(group);
-    this.GroupsService.deleteGroupEmail(template.id, group.id).then((res) => {
-      this.getTemplates(this.currentUser);
-    });
-  }
+  // removeTemplate(template, group) {
+  //   console.log(template);
+  //   console.log(group);
+  //   this.GroupsService.deleteGroupEmail(template.id, group.id).then((res) => {
+  //     this.getTemplates(this.currentUser);
+  //   });
+  // }
 
   addTemplate(group) {
     console.log(this.addNewTemplate);

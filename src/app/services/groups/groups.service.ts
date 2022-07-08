@@ -45,8 +45,8 @@ export class GroupsService {
       payload = [payload];
     }
     for (let i = 0; i < payload.length; i++) {
-      let groupEmail = payload[i];
-      await this.GroupTemplateApi.create(groupEmail).toPromise();
+      let groupTemplate = payload[i];
+      await this.GroupTemplateApi.create(groupTemplate).toPromise();
     }
   }
 
@@ -61,22 +61,27 @@ export class GroupsService {
     }
   }
 
-  async deleteGroupEmail(emailId, groupId) {
-    console.log(emailId);
-    console.log(groupId);
+  
+
+  async getGroupEmailId(emailId, groupId){
     return await this.GroupemailApi.find({
       where: { and: [{ emailId: emailId, groupId: groupId }] },
-    })
-      .toPromise()
-      .then((res: any) => {
-        console.log(res);
-        if (res.length) {
-          console.log(res[0]);
-          this.GroupemailApi.deleteById(res[0].id).toPromise();
-        }
-      });
+    }).toPromise();
   }
 
+  async deleteGroupEmail(id) {
+    return await this.GroupemailApi.deleteById(id).toPromise();
+}
+
+  async deleteGroupTemplate(id) {
+      return await this.GroupTemplateApi.deleteById(id).toPromise();
+  }
+
+  async getGroupTemplateId(templateId, groupId){
+    return await this.GroupTemplateApi.find({
+      where: { and: [{ templateId: templateId, groupId: groupId }] },
+    }).toPromise();
+  }
   async upsertEmail(payload: any) {
     const { id } = payload;
     if (!id) return await this.EmailApi.create(payload).toPromise();
