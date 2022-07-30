@@ -40,7 +40,13 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class EmailsComponent implements OnInit {
   dataSource: any = [];
-  columnsToDisplay = ['name', 'totalEmails', 'totalTemplates', 'editGroup'];
+  columnsToDisplay = [
+    'name',
+    'totalEmails',
+    'totalTemplates',
+    'editGroup',
+    'deleteGroup',
+  ];
   expandedElement: any | null;
   addNewEmail = '';
   currentUser: any = null;
@@ -111,7 +117,7 @@ export class EmailsComponent implements OnInit {
   }
 
   public removeTemplate(template: any, groupId): void {
-    console.log("template");
+    console.log('template');
     console.log(template);
     const index = this.chipSelectedTemplates.indexOf(template);
     if (index >= 0) {
@@ -122,8 +128,7 @@ export class EmailsComponent implements OnInit {
   }
 
   public templateSelected(event: MatAutocompleteSelectedEvent, groupId): void {
-    
-    const selectedTemplate = this.allTemplates.filter((res)=> {
+    const selectedTemplate = this.allTemplates.filter((res) => {
       return res.name === event.option.value;
     });
     console.log(selectedTemplate);
@@ -191,7 +196,7 @@ export class EmailsComponent implements OnInit {
     let filters = {
       where: { enduserId: user.id },
       include: ['emails', 'templates'],
-      order: 'id DESC'
+      order: 'id DESC',
     };
     this.GroupsService.lookupGroups(filters).then((res) => {
       console.log(res);
@@ -229,41 +234,45 @@ export class EmailsComponent implements OnInit {
   }
 
   removeEmail(email, group) {
-    this.GroupsService.getGroupEmailId(email.id, group.id)
-    .then((response: any)=>{
-      if(response){
-        this.GroupsService.deleteGroupEmail(response[0].id).then((res) => {
-        this.getGroups(this.currentUser);
-        });
+    this.GroupsService.getGroupEmailId(email.id, group.id).then(
+      (response: any) => {
+        if (response) {
+          this.GroupsService.deleteGroupEmail(response[0].id).then((res) => {
+            this.getGroups(this.currentUser);
+          });
+        }
       }
-    });
-    
-
-
+    );
   }
 
-  expensionFunc(element){
+  expensionFunc(element) {
     this.chipSelectedTemplates = [...element.templates];
   }
   removeTemplateFromGroup(templateId, groupId) {
-    
-    this.GroupsService.getGroupTemplateId(templateId, groupId)
-    .then((response: any)=>{
-      if(response){
-        this.GroupsService.deleteGroupTemplate(response[0].id).then((res) => {
-      
-          this.getGroups(this.currentUser);
-    
-        });
+    this.GroupsService.getGroupTemplateId(templateId, groupId).then(
+      (response: any) => {
+        if (response) {
+          this.GroupsService.deleteGroupTemplate(response[0].id).then((res) => {
+            this.getGroups(this.currentUser);
+          });
+        }
       }
-    });
-    
+    );
   }
 
   addEmail(group) {
-    // console.log(this.addNewEmail);
-    // console.log(group);
-    // console.log(this.currentUser);
+    const regularExpression =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (!regularExpression.test(String(this.addNewEmail).toLowerCase())) {
+      alert('Please enter the valid email');
+      return;
+    }
+
+    if (!this.addNewEmail) {
+      alert('Please enter an Eamil');
+      return;
+    }
 
     let createEmailPayload = {
       email: this.addNewEmail,
@@ -292,11 +301,21 @@ export class EmailsComponent implements OnInit {
       groupId: groupId,
       enduserId: this.currentUser.id,
     };
-    this.GroupsService.upsertGroupTemplateAPI(groupTemplatePayload)
-    .then((res) =>{
-      this.getGroups(this.currentUser);
-    });
-    
-   
+    this.GroupsService.upsertGroupTemplateAPI(groupTemplatePayload).then(
+      (res) => {
+        this.getGroups(this.currentUser);
+      }
+    );
+  }
+
+  deleteGroup(event, element) {
+    event.stopPropagation();
+    console.log(element);
+    let ans = confirm('Are you Sure you want to Delete the group ?');
+    if (ans) {
+      this.GroupsService.deleteGroup(element).then((res) => {
+        this.getGroups(this.currentUser);
+      });
+    }
   }
 }

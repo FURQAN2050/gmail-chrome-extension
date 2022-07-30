@@ -60,10 +60,7 @@ export class GroupsService {
       ).toPromise();
     }
   }
-
-  
-
-  async getGroupEmailId(emailId, groupId){
+  async getGroupEmailId(emailId, groupId) {
     return await this.GroupemailApi.find({
       where: { and: [{ emailId: emailId, groupId: groupId }] },
     }).toPromise();
@@ -71,13 +68,13 @@ export class GroupsService {
 
   async deleteGroupEmail(id) {
     return await this.GroupemailApi.deleteById(id).toPromise();
-}
-
-  async deleteGroupTemplate(id) {
-      return await this.GroupTemplateApi.deleteById(id).toPromise();
   }
 
-  async getGroupTemplateId(templateId, groupId){
+  async deleteGroupTemplate(id) {
+    return await this.GroupTemplateApi.deleteById(id).toPromise();
+  }
+
+  async getGroupTemplateId(templateId, groupId) {
     return await this.GroupTemplateApi.find({
       where: { and: [{ templateId: templateId, groupId: groupId }] },
     }).toPromise();
@@ -97,5 +94,47 @@ export class GroupsService {
         payload
       ).toPromise();
     }
+  }
+
+  async deleteGroup(payload) {
+    const { emails, templates, id: groupId } = payload;
+    // delete all the emails assciated in the bridge Table.
+    if (!!emails && emails.length) {
+      for (let i = 0; i < emails.length; i++) {
+        const { id: emailId } = emails[i];
+        let bridgeTableEmail: any = await this.getGroupEmailId(
+          emailId,
+          groupId
+        );
+        if (bridgeTableEmail.length) {
+          const { id } = bridgeTableEmail[0];
+          if (id) {
+            console.log(id);
+            await this.deleteGroupEmail(id);
+          }
+        }
+      }
+    }
+
+    // delete all the Templates assciated in the bridge Table.
+    if (!!templates && templates.length) {
+      for (let i = 0; i < templates.length; i++) {
+        const { id: templateId } = templates[i];
+        let bridgeTableTemplate: any = await this.getGroupTemplateId(
+          templateId,
+          groupId
+        );
+        if (bridgeTableTemplate.length) {
+          const { id } = bridgeTableTemplate[0];
+          if (id) {
+            console.log(id);
+            await this.deleteGroupTemplate(id);
+          }
+        }
+      }
+    }
+
+    // finally delete the group
+    return this.GroupApi.deleteById(groupId).toPromise();
   }
 }
