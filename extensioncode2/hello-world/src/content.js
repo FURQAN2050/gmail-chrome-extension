@@ -199,19 +199,20 @@ class Toggle extends React.Component {
   showGroupTemplates(templates) {
     const style = {
       'font-size': '16px;',
-      "margin": "10px",
       "background-color": "#04AA6D",
       "border-radius": "16px",
-      "height": "30px",
-      "background": "white"
+      "background": "white",
+      "border": "0"
     }
     console.log(templates)
     let finalTempaltes = [];
     for (let i = 0; i < templates.length; i++) {
       finalTempaltes.push(
-        <button style={style} onClick={() => this.setTemplatesOnEmailBody(templates[i])}>
-          {templates[i].name}
-        </button>
+        <li>
+          <button style={style} onClick={() => this.setTemplatesOnEmailBody(templates[i])}>
+            {templates[i].name}
+          </button>
+        </li>
       )
     }
     if (finalTempaltes.length) {
@@ -226,36 +227,30 @@ class Toggle extends React.Component {
     let groupsDataDiv = [];
     const style = {
       'font-size': '16px;',
-      "margin": "10px",
       "background-color": "#04AA6D",
       "border-radius": "16px",
       "background": "white",
+      "border": "0"
     }
     const mainDivBorder = {
-      "border-right": "1px solid black",
+      "border": "1px solid black",
       "margin": "2px",
       "padding": "2px",
-      "width": "151px"
-
-      // "margin": "30px",
-      // "display": "flex",
-      // "flex-direction": "row",
-      // "width": "300px",
-      // "height": "150px",
-      // "padding": "5px;",
-      // "flex": "1 1 auto",
-      // "border": "1px black solid",
-      // "text-align": "center",
-      // "margin": "5px;"
+      "width": "250px",
     };
     const flexContainer = {
+      "width": "550px",
+      "height": "300px",
+      "overflow-y": "scroll",
+    };
+    const mainflexDiv = {
       "display": "flex",
-      "flex-wrap": "wrap",
-      "overflow": "scroll",
+      "flex-flow": "row wrap"
     };
     const heading = {
       "font-weight": "bold",
-      "text-decoration-line": "underline"
+      "text-decoration-line": "underline",
+      "margin": "0 auto"
     }
     for (let i = 0; i < this.state.data.length; i++) {
       console.log(this.state.data[i]);
@@ -263,13 +258,19 @@ class Toggle extends React.Component {
       console.log(group);
       groupsDataDiv.push(
         <div style={mainDivBorder}>
-          <h3 style={heading}>Group</h3>
-          <button style={style} onClick={() => this.handleClick(this.state.data[i])}>
-            {group}
-          </button>
-          <h3 style={heading}>Templates</h3>
+          <h4 style={heading}>Group {i + 1}</h4>
+          <ul>
+            <li>
+              <button style={style} onClick={() => this.handleClick(this.state.data[i])}>
+                {group}
+              </button>
+            </li>
+          </ul>
+          <h4 style={heading}>Templates</h4>
           <div>
-            {this.showGroupTemplates(this.state.data[i].templates)}
+            <ul>
+              {this.showGroupTemplates(this.state.data[i].templates)}
+            </ul>
           </div>
         </div>
       );
@@ -278,7 +279,9 @@ class Toggle extends React.Component {
       return (
         <div>
           <div style={flexContainer}>
-            {groupsDataDiv}
+            <div style={mainflexDiv}>
+              {groupsDataDiv}
+            </div>
           </div>
           <button className="button-container-logout" onClick={this.signout}> Signout</button>
           <button className="button-container-close" onClick={this.closeWidget}> Close</button>
@@ -309,12 +312,6 @@ class Toggle extends React.Component {
                 />
               </div>
             </Form.Group>
-            {/* <div className="button-container">
-              i
-              <Button block size="lg" type="submit" disabled={!this.validateForm()}>
-                Login
-              </Button>
-            </div> */}
             <div className="button-container">
               <input type="submit" disabled={!this.validateForm()} />
             </div>
