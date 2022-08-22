@@ -9,9 +9,12 @@ startExtension();
 let Data = [];
 let SDK = [];
 let COMPOSEVIEW = '';
+let MESSAGEVIEW = '';
 let EXISTIGNUSERID = '';
 let USERLOGGEDIN = false;
 let MODAL = ';';
+// intentionally add var instead of let.
+var showThreadButtonBooleaan = 1;
 
 async function checkloggedIn() {
   return chrome.storage.sync.get(['userId']);
@@ -22,7 +25,7 @@ async function checkloggedIn() {
 async function startExtension() {
   let sdk = await InboxSDK.load(1, "sdk_ChromExFurq2050_ee9f7d02da");
   SDK = sdk;
-  const { Compose: GmailDomComposer } = sdk;
+  const { Compose: GmailDomComposer, Conversations, Toolbars, registerToolbarButtonForList, getThreadView } = sdk;
   console.log('befre');
   let loggedInResponse = await checkloggedIn();
   console.log(loggedInResponse);
@@ -39,41 +42,43 @@ async function startExtension() {
       title: "Gmail Chrome Extension",
       iconUrl: "https://lh5.googleusercontent.com/itq66nh65lfCick8cJ-OPuqZ8OUDTIxjCc25dkc4WUT1JG8XG3z6-eboCu63_uDXSqMnLRdlvQ=s128-h128-e365",
       onClick: function (event) {
-
         MODAL = sdk.Widgets.showModalView({
           title: 'Groups List',
           el: '<div id = "test-comp"></div> '//getData(),
         });
         render(<Toggle />, document.getElementById('test-comp'));
-        const style = {
-          'font-size': "20px"
-        }
-        function RenderGroup() {
-          console.log(data);
-          let groupsDataDiv = [];
-          for (let i = 0; i < data.length; i++) {
-            console.log(data[i]);
-            let group = data[i].name;
-            console.log(group);
-            groupsDataDiv.push(<div>
-              <button onclick="setEmails(group)">
-                {group}
-              </button>
-            </div>);
-          }
-          return (<div>
-            {groupsDataDiv}
-          </div>);
-        }
-        function setEmails(group) {
-          console.log(group)
-
-        }
-
       },
     })
 
   });
+
+  Conversations.registerMessageViewHandler(messageViewHandler => {
+    console.log(messageViewHandler);
+    let elementBody = messageViewHandler.getBodyElement();
+    console.log(elementBody);
+    MESSAGEVIEW = messageViewHandler;
+    console.log(showThreadButtonBooleaan);
+    if (showThreadButtonBooleaan == 1) {
+      showThreadButtonBooleaan = 0;
+
+      Toolbars.registerThreadButton({
+        title: "customButton",
+        iconUrl: "https://lh5.googleusercontent.com/itq66nh65lfCick8cJ-OPuqZ8OUDTIxjCc25dkc4WUT1JG8XG3z6-eboCu63_uDXSqMnLRdlvQ=s128-h128-e365",
+        onClick: function (event) {
+          MODAL = sdk.Widgets.showModalView({
+            title: 'Message Details To Send',
+            el: '<div id = "message-view-comp"></div> '//getData(),
+          });
+          render(<RegisterMessageViewIconOnClick />, document.getElementById('message-view-comp'));
+        },
+      });
+    }
+  })
+
+
+
+
+
 }
 
 class Toggle extends React.Component {
@@ -321,4 +326,28 @@ class Toggle extends React.Component {
       );
     }
   }
+}
+
+class RegisterMessageViewIconOnClick extends React.Component {
+  constructor(props) {
+    super(props);
+    this.getMessageBody = this.getMessageBody.bind(this);
+    this.getMessageRecipents = this.getMessageRecipents.bind(this);
+  }
+  getMessageBody() {
+    console.log(MESSAGEVIEW.getBodyElement());
+    return (<div>{MESSAGEVIEW.getBodyElement()}</div>)
+  }
+  getMessageRecipents() {
+    console.log(MESSAGEVIEW.getRecipients());
+  }
+  render() {
+    let messageBody = this.getMessageBody();
+    let messageRecipents = this.getMessageRecipents();
+    console.log(messageRecipents);
+    let UI = (<div>Hello this is the test View</div>);
+
+    return UI;
+  }
+
 }
