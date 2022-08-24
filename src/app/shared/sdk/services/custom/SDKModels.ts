@@ -7,6 +7,7 @@ import { Enduser } from '../../models/Enduser';
 import { Group } from '../../models/Group';
 import { Groupemail } from '../../models/Groupemail';
 import { Grouptemplate } from '../../models/Grouptemplate';
+import { Emailinformation } from '../../models/Emailinformation';
 
 export interface Models { [name: string]: any }
 
@@ -21,6 +22,7 @@ export class SDKModels {
     Group: Group,
     Groupemail: Groupemail,
     Grouptemplate: Grouptemplate,
+    Emailinformation: Emailinformation,
     
   };
 

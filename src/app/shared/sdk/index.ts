@@ -55,6 +55,7 @@ import { EnduserApi } from './services/custom/Enduser';
 import { GroupApi } from './services/custom/Group';
 import { GroupemailApi } from './services/custom/Groupemail';
 import { GrouptemplateApi } from './services/custom/Grouptemplate';
+import { EmailinformationApi } from './services/custom/Emailinformation';
 /**
  * @module SDKBrowserModule
  * @description
@@ -91,6 +92,7 @@ export class SDKBrowserModule {
         GroupApi,
         GroupemailApi,
         GrouptemplateApi,
+        EmailinformationApi,
         internalStorageProvider,
         { provide: SDKStorage, useClass: StorageBrowser },
         { provide: SocketDriver, useClass: SocketBrowser },

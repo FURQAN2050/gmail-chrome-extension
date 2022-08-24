@@ -6,5 +6,6 @@ export * from './Enduser';
 export * from './Group';
 export * from './Groupemail';
 export * from './Grouptemplate';
+export * from './Emailinformation';
 export * from './BaseModels';
 export * from './FireLoopRef';
