@@ -8,6 +8,18 @@
   "properties": {
     "projectManager": {
       "type": "string"
+    },
+    "htmlTemplate": {
+      "type": "string",
+      "mysql": {
+        "dataType": "LONGTEXT"
+      }
+    },
+    "htmlRecipient": {
+      "type": "string",
+      "mysql": {
+        "dataType": "LONGTEXT"
+      }
     }
   },
   "validations": [],
