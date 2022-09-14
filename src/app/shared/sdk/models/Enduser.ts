@@ -2,7 +2,8 @@
 import {
   Email,
   Template,
-  Group
+  Group,
+  Emailinformation
 } from '../index';
 
 declare var Object: any;
@@ -17,6 +18,7 @@ export interface EnduserInterface {
   emails?: Email[];
   templates?: Template[];
   groups?: Group[];
+  emailinformations?: Emailinformation[];
 }
 
 export class Enduser implements EnduserInterface {
@@ -30,6 +32,7 @@ export class Enduser implements EnduserInterface {
   emails: Email[];
   templates: Template[];
   groups: Group[];
+  emailinformations: Emailinformation[];
   constructor(data?: EnduserInterface) {
     Object.assign(this, data);
   }
@@ -117,6 +120,14 @@ export class Enduser implements EnduserInterface {
           name: 'groups',
           type: 'Group[]',
           model: 'Group',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'enduserId'
+        },
+        emailinformations: {
+          name: 'emailinformations',
+          type: 'Emailinformation[]',
+          model: 'Emailinformation',
           relationType: 'hasMany',
                   keyFrom: 'id',
           keyTo: 'enduserId'

@@ -3,12 +3,18 @@
 declare var Object: any;
 export interface EmailinformationInterface {
   "projectManager"?: string;
+  "htmlTemplate"?: string;
+  "htmlRecipient"?: string;
   "id"?: number;
+  "enduserId"?: number;
 }
 
 export class Emailinformation implements EmailinformationInterface {
   "projectManager": string;
+  "htmlTemplate": string;
+  "htmlRecipient": string;
   "id": number;
+  "enduserId": number;
   constructor(data?: EmailinformationInterface) {
     Object.assign(this, data);
   }
@@ -46,8 +52,20 @@ export class Emailinformation implements EmailinformationInterface {
           name: 'projectManager',
           type: 'string'
         },
+        "htmlTemplate": {
+          name: 'htmlTemplate',
+          type: 'string'
+        },
+        "htmlRecipient": {
+          name: 'htmlRecipient',
+          type: 'string'
+        },
         "id": {
           name: 'id',
+          type: 'number'
+        },
+        "enduserId": {
+          name: 'enduserId',
           type: 'number'
         },
       },
