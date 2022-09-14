@@ -4,13 +4,13 @@ import { render } from "react-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./react-components/Login.css";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 startExtension();
 let Data = [];
 let SDK = [];
 let COMPOSEVIEW = '';
 let MESSAGEVIEW = '';
-let EXISTIGNUSERID = '';
+var EXISTIGNUSERID = '';
 let USERLOGGEDIN = false;
 let MODAL = ';';
 // intentionally add var instead of let.
@@ -66,7 +66,7 @@ async function startExtension() {
         iconUrl: "https://lh5.googleusercontent.com/itq66nh65lfCick8cJ-OPuqZ8OUDTIxjCc25dkc4WUT1JG8XG3z6-eboCu63_uDXSqMnLRdlvQ=s128-h128-e365",
         onClick: function (event) {
           MODAL = sdk.Widgets.showModalView({
-            title: 'Message Details To Send',
+            title: 'Email Info',
             el: '<div id = "message-view-comp"></div> '//getData(),
           });
           render(<RegisterMessageViewIconOnClick />, document.getElementById('message-view-comp'));
@@ -331,21 +331,57 @@ class Toggle extends React.Component {
 class RegisterMessageViewIconOnClick extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { showmessage: 'Send Data to App.' };
     this.getMessageBody = this.getMessageBody.bind(this);
     this.getMessageRecipents = this.getMessageRecipents.bind(this);
+    this.sendDataToApp = this.sendDataToApp.bind(this);
+
   }
   getMessageBody() {
-    console.log(MESSAGEVIEW.getBodyElement());
-    return (<div>{MESSAGEVIEW.getBodyElement()}</div>)
+    console.log(JSON.stringify(MESSAGEVIEW.getBodyElement().outerHTML));
+    return MESSAGEVIEW.getBodyElement().outerHTML;
   }
   getMessageRecipents() {
     console.log(MESSAGEVIEW.getRecipients());
+    return MESSAGEVIEW.getRecipients();
   }
-  render() {
+
+  sendDataToApp() {
+    // if (!EXISTIGNUSERID) {
+    //   alert("You are not logged In");
+    //   return;
+    // }
     let messageBody = this.getMessageBody();
     let messageRecipents = this.getMessageRecipents();
-    console.log(messageRecipents);
-    let UI = (<div>Hello this is the test View</div>);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        htmlTemplate: JSON.stringify(messageBody),
+        htmlRecipient: messageRecipents,
+        enduserId: EXISTIGNUSERID
+      })
+    };
+    console.log(requestOptions);
+    fetch('https://chrome.myprojectstaging.com:3000/api/emailinformations', requestOptions)
+      .then(response => response.json())
+      .then(res => {
+        console.log(res);
+        this.setState({ showmessage: "Data has been send to Web App succesfully" })
+      }).catch(err => {
+        alert('Error in sending the Data');
+      });
+  }
+  render() {
+    let UI = (
+      <div>
+        <h5>
+          {this.state.showmessage}
+        </h5>
+        <button className='button-container-close' onClick={() => this.sendDataToApp()}>
+          Send Data To Web App
+        </button>
+      </div>);
 
     return UI;
   }
