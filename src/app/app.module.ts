@@ -31,6 +31,8 @@ import { NgxEditorModule } from 'ngx-editor';
 import { TemplatesComponent } from './components/templates/templates.component';
 import { EmailEditorModule } from 'angular-email-editor';
 import { AddTemplateModalComponent } from './components/templates/add-template-modal/add-template-modal.component';
+import { EmailInfoComponent } from './components/email-info/email-info.component';
+import { EmailDirectoriesComponent } from './components/email-directories/email-directories.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { AddTemplateModalComponent } from './components/templates/add-template-m
     NavbarComponent,
     TemplatesComponent,
     AddTemplateModalComponent,
+    EmailInfoComponent,
+    EmailDirectoriesComponent,
   ],
   imports: [
     BrowserModule,
