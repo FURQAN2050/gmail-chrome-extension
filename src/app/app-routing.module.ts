@@ -5,12 +5,18 @@ import { LoginComponent } from './components/login/login.component';
 import { TemplatesComponent } from './components/templates/templates.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AuthRouteGuardService as AuthGuard } from './services/auth-route-guard/auth-route-guard.service';
+import { EmailInfoComponent } from './components/email-info/email-info.component';
 
 const routes: Routes = [
   { path: 'emails', component: EmailsComponent, canActivate: [AuthGuard] },
   {
     path: 'templates',
     component: TemplatesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'email-info',
+    component: EmailInfoComponent,
     canActivate: [AuthGuard],
   },
   { path: 'login', component: LoginComponent },

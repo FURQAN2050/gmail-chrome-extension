@@ -1,1 +1,51 @@
-<p>email-info works!</p>
+<div class="container">
+  <h1 class="font-weight-bold">Specific Email Information</h1>
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    multiTemplateDataRows
+    class="mat-elevation-z8"
+  >
+    <ng-container matColumnDef="projectManager">
+      <th mat-header-cell *matHeaderCellDef>Project Manager</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.name | uppercase }}
+      </td>
+    </ng-container>
+nion
+    <ng-container matColumnDef="processData" style="text-align: center">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button mat-button color="primary">
+          Process Data
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [attr.colspan]="columnsToDisplay.length"
+      >
+        <br />
+      </td>
+    </ng-container>
+
+    <br />
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr
+      mat-row
+      *matRowDef="let element; columns: columnsToDisplay"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expandedDetail']"
+      class="example-detail-row"
+    ></tr>
+  </table>
+</div>

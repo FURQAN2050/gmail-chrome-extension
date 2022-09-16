@@ -51,7 +51,7 @@ export class TemplatesComponent implements OnInit {
     console.log('get Template Called');
     let filters = {
       where: { enduserId: user.id },
-      order: 'id DESC'
+      order: 'id DESC',
     };
     this.GroupsService.lookupTemplates(filters).then((res) => {
       console.log(res);
