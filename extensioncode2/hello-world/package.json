@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/InboxSDK/hello-world#readme",
   "dependencies": {
-    "@inboxsdk/core": "^0.2.1",
+    "@inboxsdk/core": "^0.2.16",
     "axios": "^0.26.1",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",

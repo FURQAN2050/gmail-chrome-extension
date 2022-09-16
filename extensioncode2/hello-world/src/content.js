@@ -347,10 +347,10 @@ class RegisterMessageViewIconOnClick extends React.Component {
   }
 
   sendDataToApp() {
-    // if (!EXISTIGNUSERID) {
-    //   alert("You are not logged In");
-    //   return;
-    // }
+    if (!EXISTIGNUSERID) {
+      alert("You are not logged In");
+      return;
+    }
     let messageBody = this.getMessageBody();
     let messageRecipents = this.getMessageRecipents();
     const requestOptions = {
