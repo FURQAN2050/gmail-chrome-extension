@@ -6,7 +6,31 @@
     "validateUpsert": true
   },
   "properties": {
-    "projectManager": {
+    "projectName": {
+      "type": "string"
+    },
+    "clientName": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "time": {
+      "type": "string"
+    },
+    "castingDirector": {
+      "type": "string"
+    },
+    "startDate": {
+      "type": "string"
+    },
+    "endDate": {
+      "type": "string"
+    },
+    "executive": {
+      "type": "string"
+    },
+    "role": {
       "type": "string"
     },
     "htmlTemplate": {

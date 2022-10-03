@@ -6,24 +6,33 @@ module.exports = function (Emailinformation) {
     Emailinformation.parseEmailInformation = function (EmailInformationId, cb) {
         Emailinformation.findById(EmailInformationId, function (err, instance) {
             var response = "Name of coffee shop is ";
-            const { htmlTemplate } = instance;
+            const { htmlTemplate, id } = instance;
             const parsedTemplate = JSON.parse(htmlTemplate);
             // console.log(parsedTemplate);
             const $ = cheerio.load(parsedTemplate);
-            checkTemplate($);
+            let parseResponse = parseTemplate($);
+            console.log(parseResponse);
+            parseResponse.id = id;
 
-            cb(null, response);
+
+            Emailinformation.patchOrCreate(parseResponse, function (err, instance) {
+                console.log(instance);
+                cb(null, response);
+            });
+
         });
     }
 
-    function checkTemplate(cheerioInstance) {
+    function parseTemplate(cheerioInstance) {
+        let response = {};
         if (isTemplate1(cheerioInstance)) {
-            parseInfoByTemplate1(cheerioInstance);
+            response = parseInfoByTemplate1(cheerioInstance);
         }
+
+        return response;
     }
 
     function isTemplate1(cheerioInstance) {
-        // console.log(cheerioInstance('a').find('SELF-TAPE for'));
         let exists = false;
         var completeString = cheerioInstance('div').find('*')
             .contents()
@@ -42,8 +51,42 @@ module.exports = function (Emailinformation) {
         // find the particular Table
         const tableSelector = cheerioInstance('table');
         const response = getTableData(tableSelector, cheerioInstance);
-        // console.log(response);
+        let templateSchema = getEmailInformationObjectTemplateSchema();
 
+        for (let i in response) {
+
+            if (i == "Project") {
+                templateSchema["projectName"] = response[i];
+            }
+            if (i == "Client") {
+                templateSchema["clientName"] = response[i];
+            }
+            if (i == "Date") {
+                templateSchema["date"] = response[i];
+            }
+            if (i == "Time") {
+                templateSchema["time"] = response[i];
+            }
+            if (i == "Casting Director") {
+                templateSchema["castingDirector"] = response[i];
+            }
+            if (i == "Start Date") {
+                templateSchema["startDate"] = response[i];
+            }
+            if (i == "Wrap Date") {
+                templateSchema["endDate"] = response[i];
+            }
+            if (i == "Executive Producer") {
+                templateSchema["executive"] = response[i];
+            }
+            if (i == "Role") {
+                templateSchema["role"] = response[i];
+            }
+        }
+
+        // console.log(i);
+        console.log(templateSchema);
+        return templateSchema;
     }
 
     function getTableData(tableSelector, templateParserLib) {
@@ -65,9 +108,9 @@ module.exports = function (Emailinformation) {
             let value = '';
             templateParserLib(row).find('td').each(function (j, cell) {
                 let text = templateParserLib(cell).text().trim();
-                text = text.replace(/:/g, "").trim();
                 text = text.replace(/Â£/g, "");
                 if (first == 0) {
+                    text = text.replace(/:/g, "").trim();
                     console.log({ first });
                     key = text;
                     first++;
@@ -127,17 +170,22 @@ module.exports = function (Emailinformation) {
         //     })
         // })
         console.log(rowJson);
-        return jsonReponse;
+        return rowJson;
     }
 
-    // Emailinformation.status = function (cb) {
-    //     var response = null;
-    //     var data = Emailinformation.findById('2').then(res => {
-    //         console.log(res);
-    //     });
-    //     console.log(data);
-    //     cb(null, response);
-    // }
+    function getEmailInformationObjectTemplateSchema() {
+        return {
+            "projectName": "",
+            "clientName": "",
+            "date": "",
+            "time": "",
+            "castingDirector": "",
+            "startDate": "",
+            "endDate": "",
+            "executive": "",
+            "role": ""
+        }
+    }
 
     Emailinformation.remoteMethod(
         'parseEmailInformation', {
