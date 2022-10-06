@@ -21,7 +21,6 @@ async function checkloggedIn() {
 }
 
 
-
 async function startExtension() {
   let sdk = await InboxSDK.load(1, "sdk_ChromExFurq2050_ee9f7d02da");
   SDK = sdk;
@@ -358,7 +357,7 @@ class RegisterMessageViewIconOnClick extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         htmlTemplate: JSON.stringify(messageBody),
-        htmlRecipient: messageRecipents,
+        htmlRecipient: JSON.stringify(messageRecipents),
         enduserId: EXISTIGNUSERID
       })
     };
