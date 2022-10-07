@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   EmailApi,
+  EmailinformationApi,
   GroupApi,
   GroupemailApi,
   GrouptemplateApi,
@@ -15,7 +16,8 @@ export class GroupsService {
     private GroupApi: GroupApi,
     private GroupemailApi: GroupemailApi,
     private TemplateApi: TemplateApi,
-    private GroupTemplateApi: GrouptemplateApi
+    private GroupTemplateApi: GrouptemplateApi,
+    private EmailInfoApi: EmailinformationApi
   ) {}
 
   async lookupGroups(filters: any) {
@@ -136,5 +138,9 @@ export class GroupsService {
 
     // finally delete the group
     return this.GroupApi.deleteById(groupId).toPromise();
+  }
+
+  async lookupEmailInfo(filters: any) {
+    return this.EmailInfoApi.find(filters).toPromise();
   }
 }

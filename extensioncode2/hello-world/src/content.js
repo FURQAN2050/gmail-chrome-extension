@@ -10,6 +10,7 @@ let Data = [];
 let SDK = [];
 let COMPOSEVIEW = '';
 let MESSAGEVIEW = '';
+let THREADVIEW = '';
 var EXISTIGNUSERID = '';
 let USERLOGGEDIN = false;
 let MODAL = ';';
@@ -56,22 +57,25 @@ async function startExtension() {
     let elementBody = messageViewHandler.getBodyElement();
     console.log(elementBody);
     MESSAGEVIEW = messageViewHandler;
-    console.log(showThreadButtonBooleaan);
-    if (showThreadButtonBooleaan == 1) {
-      showThreadButtonBooleaan = 0;
+    Conversations.registerThreadViewHandler(threadViewHandler => {
+      THREADVIEW = threadViewHandler;
+      console.log(showThreadButtonBooleaan);
+      if (showThreadButtonBooleaan == 1) {
+        showThreadButtonBooleaan = 0;
 
-      Toolbars.registerThreadButton({
-        title: "customButton",
-        iconUrl: "https://lh5.googleusercontent.com/itq66nh65lfCick8cJ-OPuqZ8OUDTIxjCc25dkc4WUT1JG8XG3z6-eboCu63_uDXSqMnLRdlvQ=s128-h128-e365",
-        onClick: function (event) {
-          MODAL = sdk.Widgets.showModalView({
-            title: 'Email Info',
-            el: '<div id = "message-view-comp"></div> '//getData(),
-          });
-          render(<RegisterMessageViewIconOnClick />, document.getElementById('message-view-comp'));
-        },
-      });
-    }
+        Toolbars.registerThreadButton({
+          title: "customButton",
+          iconUrl: "https://lh5.googleusercontent.com/itq66nh65lfCick8cJ-OPuqZ8OUDTIxjCc25dkc4WUT1JG8XG3z6-eboCu63_uDXSqMnLRdlvQ=s128-h128-e365",
+          onClick: function (event) {
+            MODAL = sdk.Widgets.showModalView({
+              title: 'Email Info',
+              el: '<div id = "message-view-comp"></div> '//getData(),
+            });
+            render(<RegisterMessageViewIconOnClick />, document.getElementById('message-view-comp'));
+          },
+        });
+      }
+    })
   })
 
 
@@ -333,6 +337,7 @@ class RegisterMessageViewIconOnClick extends React.Component {
     this.state = { showmessage: 'Send Data to App.' };
     this.getMessageBody = this.getMessageBody.bind(this);
     this.getMessageRecipents = this.getMessageRecipents.bind(this);
+    this.getMessageSubject = this.getMessageSubject.bind(this);
     this.sendDataToApp = this.sendDataToApp.bind(this);
 
   }
@@ -344,6 +349,10 @@ class RegisterMessageViewIconOnClick extends React.Component {
     console.log(MESSAGEVIEW.getRecipients());
     return MESSAGEVIEW.getRecipients();
   }
+  getMessageSubject() {
+    console.log(THREADVIEW.getSubject());
+    return THREADVIEW.getSubject();
+  }
 
   sendDataToApp() {
     if (!EXISTIGNUSERID) {
@@ -352,12 +361,14 @@ class RegisterMessageViewIconOnClick extends React.Component {
     }
     let messageBody = this.getMessageBody();
     let messageRecipents = this.getMessageRecipents();
+    let messageSubject = this.getMessageSubject();
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         htmlTemplate: JSON.stringify(messageBody),
         htmlRecipient: JSON.stringify(messageRecipents),
+        subject: JSON.stringify(messageSubject),
         enduserId: EXISTIGNUSERID
       })
     };

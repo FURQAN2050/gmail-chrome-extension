@@ -44,6 +44,12 @@
       "mysql": {
         "dataType": "LONGTEXT"
       }
+    },
+    "subject": {
+      "type": "string"
+    },
+    "storyLine": {
+      "type": "string"
     }
   },
   "validations": [],

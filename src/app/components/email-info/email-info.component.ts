@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GroupsService } from 'src/app/services/groups/groups.service';
 import { LoginAuthenticationService } from 'src/app/services/loginAuthentication/login-authentication.service';
 
 @Component({
@@ -8,15 +9,34 @@ import { LoginAuthenticationService } from 'src/app/services/loginAuthentication
 })
 export class EmailInfoComponent implements OnInit {
   dataSource: any = [];
-  columnsToDisplay = ['projectManager', 'processData'];
+  columnsToDisplay = ['projectManager', 'processTemplate'];
   currentUser: any = null;
 
   expandedElement: any | null;
 
-  constructor(public authentication: LoginAuthenticationService) {
+  constructor(
+    public authentication: LoginAuthenticationService,
+    private ApiService: GroupsService
+  ) {
     this.authentication.getAuthObservable().subscribe((res) => {
       this.currentUser = res;
+      this.getEmailInfo();
     });
+  }
+
+  getEmailInfo() {
+    let filters = {
+      where: { enduserId: this.currentUser.id },
+    };
+    this.ApiService.lookupEmailInfo(filters).then((res) => {
+      console.log(res);
+      this.dataSource = res;
+    });
+  }
+
+  processTemplate(event, id) {
+    event.stopPropagation();
+    console.log(id);
   }
 
   ngOnInit(): void {}
