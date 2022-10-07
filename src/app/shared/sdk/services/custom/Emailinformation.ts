@@ -96,18 +96,20 @@ export class EmailinformationApi extends BaseLoopBackApi {
          * (The remote method definition does not provide any description.)
          * </em>
    *
+   * @param {number} id 
+   *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
    *   from the server.
    *
    * Data properties:
    *
-   *  - `status` – `{string}` - 
+   *  - `name` – `{string}` - 
    */
-  public status(customHeaders?: Function): Observable<any> {
+  public parseEmailInformation(id: any, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/emailinformations/status";
+    "/emailinformations/parseEmailInformation";
     let _routeParams: any = {};
     let _postBody: any = {};
     let _urlParams: any = {};

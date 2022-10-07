@@ -2,17 +2,37 @@
 
 declare var Object: any;
 export interface EmailinformationInterface {
-  "projectManager"?: string;
+  "projectName"?: string;
+  "clientName"?: string;
+  "date"?: string;
+  "time"?: string;
+  "castingDirector"?: string;
+  "startDate"?: string;
+  "endDate"?: string;
+  "executive"?: string;
+  "role"?: string;
   "htmlTemplate"?: string;
   "htmlRecipient"?: string;
+  "subject"?: string;
+  "storyLine"?: string;
   "id"?: number;
   "enduserId"?: number;
 }
 
 export class Emailinformation implements EmailinformationInterface {
-  "projectManager": string;
+  "projectName": string;
+  "clientName": string;
+  "date": string;
+  "time": string;
+  "castingDirector": string;
+  "startDate": string;
+  "endDate": string;
+  "executive": string;
+  "role": string;
   "htmlTemplate": string;
   "htmlRecipient": string;
+  "subject": string;
+  "storyLine": string;
   "id": number;
   "enduserId": number;
   constructor(data?: EmailinformationInterface) {
@@ -48,8 +68,40 @@ export class Emailinformation implements EmailinformationInterface {
       path: 'Emailinformations',
       idName: 'id',
       properties: {
-        "projectManager": {
-          name: 'projectManager',
+        "projectName": {
+          name: 'projectName',
+          type: 'string'
+        },
+        "clientName": {
+          name: 'clientName',
+          type: 'string'
+        },
+        "date": {
+          name: 'date',
+          type: 'string'
+        },
+        "time": {
+          name: 'time',
+          type: 'string'
+        },
+        "castingDirector": {
+          name: 'castingDirector',
+          type: 'string'
+        },
+        "startDate": {
+          name: 'startDate',
+          type: 'string'
+        },
+        "endDate": {
+          name: 'endDate',
+          type: 'string'
+        },
+        "executive": {
+          name: 'executive',
+          type: 'string'
+        },
+        "role": {
+          name: 'role',
           type: 'string'
         },
         "htmlTemplate": {
@@ -58,6 +110,14 @@ export class Emailinformation implements EmailinformationInterface {
         },
         "htmlRecipient": {
           name: 'htmlRecipient',
+          type: 'string'
+        },
+        "subject": {
+          name: 'subject',
+          type: 'string'
+        },
+        "storyLine": {
+          name: 'storyLine',
           type: 'string'
         },
         "id": {
