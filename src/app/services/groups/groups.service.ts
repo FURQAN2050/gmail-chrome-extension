@@ -149,4 +149,17 @@ export class GroupsService {
   async deleteEmailInfo(id) {
     return await this.EmailInfoApi.deleteById(id).toPromise();
   }
+
+  async lookupEmail(filters) {
+    return this.EmailApi.find(filters).toPromise();
+  }
+  async deleteEmail(id) {
+    return await this.EmailApi.deleteById(id).toPromise();
+  }
+
+  async addEmail(payload: any) {
+    const { id } = payload;
+    if (!id) this.EmailApi.create(payload).toPromise();
+    else this.EmailApi.updateAttributes(id, payload).toPromise();
+  }
 }

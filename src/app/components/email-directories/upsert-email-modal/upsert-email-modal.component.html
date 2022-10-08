@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-between">
+  <div>
+    <h1 class="font-weight-bold model-h1" mat-dialog-title>Add/Update Email</h1>
+  </div>
+  <div>
+    <mat-icon mat-dialog-close>close</mat-icon>
+  </div>
+</div>
+
+<mat-dialog-content>
+  <div class="row">
+    <div class="col-md-12">
+      <mat-form-field class="w-100">
+        <mat-label class="model-h1"> Email</mat-label>
+        <input [(ngModel)]="model.email" matInput />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <mat-form-field class="w-100">
+        <mat-label class="model-h1"> Name</mat-label>
+        <input [(ngModel)]="model.name" matInput />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <mat-form-field class="w-100">
+        <mat-label class="model-h1"> Phone</mat-label>
+        <input [(ngModel)]="model.phone" matInput />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <mat-form-field class="w-100">
+        <mat-label class="model-h1"> Notes</mat-label>
+        <input [(ngModel)]="model.notes" matInput />
+      </mat-form-field>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <div align="end" class="col-md-12">
+    <button class="color" mat-button mat-dialog-close (click)="upsertEmail()">
+      <mat-icon>send</mat-icon> Send
+    </button>
+  </div>
+</mat-dialog-actions>

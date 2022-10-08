@@ -6,6 +6,7 @@ import { TemplatesComponent } from './components/templates/templates.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AuthRouteGuardService as AuthGuard } from './services/auth-route-guard/auth-route-guard.service';
 import { EmailInfoComponent } from './components/email-info/email-info.component';
+import { EmailDirectoriesComponent } from './components/email-directories/email-directories.component';
 
 const routes: Routes = [
   { path: 'emails', component: EmailsComponent, canActivate: [AuthGuard] },
@@ -19,6 +20,12 @@ const routes: Routes = [
     component: EmailInfoComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'email-directory',
+    component: EmailDirectoriesComponent,
+    canActivate: [AuthGuard],
+  },
+
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: '**', component: LoginComponent },

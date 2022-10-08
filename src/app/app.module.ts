@@ -34,6 +34,7 @@ import { AddTemplateModalComponent } from './components/templates/add-template-m
 import { EmailInfoComponent } from './components/email-info/email-info.component';
 import { EmailDirectoriesComponent } from './components/email-directories/email-directories.component';
 import { EmailInfoDetailModalComponent } from './components/email-info/email-info-detail-modal/email-info-detail-modal.component';
+import { UpsertEmailModalComponent } from './components/email-directories/upsert-email-modal/upsert-email-modal.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { EmailInfoDetailModalComponent } from './components/email-info/email-inf
     EmailInfoComponent,
     EmailDirectoriesComponent,
     EmailInfoDetailModalComponent,
+    UpsertEmailModalComponent,
   ],
   imports: [
     BrowserModule,
