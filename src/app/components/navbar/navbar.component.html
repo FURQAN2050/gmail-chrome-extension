@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a href="#" class="navbar-brand">
     <!-- Logo Image -->
     <img
@@ -8,7 +8,7 @@
       class="d-inline-block align-middle mr-0"
     />
     <!-- Logo Text -->
-    <span class="text-uppercase font-weight-bold">Gmail Extension</span>
+    <span class="text-uppercase font-weight-bold"> Gmail Extension</span>
   </a>
   <button
     class="navbar-toggler"
@@ -26,23 +26,40 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" routerLink="/emails">
-          Home
+          <i class="fa fa-fw fa-home"></i> Home
           <span class="sr-only">(current)</span></a
         >
       </li>
       <li class="nav-item active">
         <a class="nav-link" routerLink="/templates">
-          Templates
+          <i class="fa fa-fw fa-file"></i> Templates
           <span class="sr-only">(current)</span></a
         >
       </li>
       <li class="nav-item active">
         <a class="nav-link" routerLink="/email-info">
-          Email Information
+          <i class="fa fa-fw fa-info"></i> Email Information
           <span class="sr-only">(current)</span></a
         >
       </li>
-      <!-- <li class="nav-item">
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <button
+          class="radiusButton backGroundColor"
+          (click)="logout()"
+          mat-raised-button
+          mat-button
+          color="primary"
+        >
+          <mat-icon>logout</mat-icon>Logout
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
       </li>
       <li class="nav-item dropdown">
@@ -67,11 +84,3 @@
       <li class="nav-item">
         <a class="nav-link disabled" href="#">Disabled</a>
       </li> -->
-    </ul>
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" (click)="logout()"> Logout</a>
-      </li>
-    </ul>
-  </div>
-</nav>

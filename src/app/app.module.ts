@@ -33,6 +33,7 @@ import { EmailEditorModule } from 'angular-email-editor';
 import { AddTemplateModalComponent } from './components/templates/add-template-modal/add-template-modal.component';
 import { EmailInfoComponent } from './components/email-info/email-info.component';
 import { EmailDirectoriesComponent } from './components/email-directories/email-directories.component';
+import { EmailInfoDetailModalComponent } from './components/email-info/email-info-detail-modal/email-info-detail-modal.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { EmailDirectoriesComponent } from './components/email-directories/email-
     AddTemplateModalComponent,
     EmailInfoComponent,
     EmailDirectoriesComponent,
+    EmailInfoDetailModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +74,7 @@ import { EmailDirectoriesComponent } from './components/email-directories/email-
     MatAutocompleteModule,
     NgxEditorModule,
     EmailEditorModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

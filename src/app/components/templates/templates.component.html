@@ -1,6 +1,5 @@
 <div class="container">
   <h1 class="font-weight-bold">
-    Add Templates
     <button
       mat-mini-fab
       class="color"
@@ -8,6 +7,7 @@
     >
       <mat-icon (click)="addTemplates()">add</mat-icon>
     </button>
+    Add Templates
   </h1>
   <table
     mat-table
@@ -31,7 +31,7 @@
           color="primary"
           (click)="upsertTemplates($event, element)"
         >
-          Edit
+          <mat-icon>edit</mat-icon> Edit
         </button>
       </td>
     </ng-container>

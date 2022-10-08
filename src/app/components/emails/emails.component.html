@@ -1,6 +1,5 @@
 <div class="container">
   <h1 class="font-weight-bold">
-    Add Groups
     <button
       mat-mini-fab
       class="color"
@@ -8,6 +7,7 @@
     >
       <mat-icon (click)="addEmails()">add</mat-icon>
     </button>
+    Add Groups
   </h1>
   <table
     mat-table
@@ -45,7 +45,7 @@
           color="primary"
           (click)="upsertEmails($event, element)"
         >
-          Edit
+          <mat-icon>edit</mat-icon> Edit
         </button>
       </td>
     </ng-container>
@@ -59,7 +59,7 @@
           color="warn"
           (click)="deleteGroup($event, element)"
         >
-          Delete
+          <mat-icon>delete</mat-icon> Delete
         </button>
       </td>
     </ng-container>

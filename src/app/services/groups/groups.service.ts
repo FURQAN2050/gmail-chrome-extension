@@ -143,4 +143,10 @@ export class GroupsService {
   async lookupEmailInfo(filters: any) {
     return this.EmailInfoApi.find(filters).toPromise();
   }
+  async parseEmailInformation(id) {
+    return this.EmailInfoApi.parseEmailInformation(id).toPromise();
+  }
+  async deleteEmailInfo(id) {
+    return await this.EmailInfoApi.deleteById(id).toPromise();
+  }
 }

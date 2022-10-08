@@ -1,5 +1,6 @@
 table {
     width: 100%;
+    text-align: center;
   }
   
   tr.example-detail-row {
@@ -17,6 +18,10 @@ table {
   .example-element-row td {
     border-bottom-width: 0;
   }
+  th.mat-header-cell {
+    text-align: center !important;
+  }
+  
   
   .example-element-detail {
     overflow: hidden;

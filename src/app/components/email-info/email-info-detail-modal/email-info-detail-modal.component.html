@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <h1>
+    <img
+      src="../../../../assets/newsletter.png"
+      width="30px"
+      height="30px"
+      class="center"
+    />
+    <u> Email Information Section </u>
+  </h1>
+  <h5><b>Subject</b>: {{ emailData?.subject }}</h5>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table">
+          <caption>
+            Email Information Section
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Explanation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>client Name</td>
+              <td>{{ emailData?.clientName }}</td>
+            </tr>
+            <tr>
+              <td>Date</td>
+              <td>{{ emailData?.date }}</td>
+            </tr>
+            <tr>
+              <td>Time</td>
+              <td>{{ emailData?.time }}</td>
+            </tr>
+            <tr>
+              <td>Executive</td>
+              <td>{{ emailData?.executive }}</td>
+            </tr>
+            <tr>
+              <td>startDate</td>
+              <td>{{ emailData?.startDate }}</td>
+            </tr>
+            <tr>
+              <td>endDate</td>
+              <td>{{ emailData?.endDate }}</td>
+            </tr>
+            <tr>
+              <td>role</td>
+              <td>{{ emailData?.role }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</div>
