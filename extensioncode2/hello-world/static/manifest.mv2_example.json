@@ -7,17 +7,28 @@
       "matches": [
         "https://mail.google.com/*"
       ],
-      "js": ["content.js"],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_end"
     }
   ],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": [
+      "background.js"
+    ],
     "persistent": false
   },
-  "web_accessible_resources": [ "pageWorld.js" ],
+  "web_accessible_resources": [
+    "pageWorld.js"
+  ],
   "permissions": [
     "https://mail.google.com/"
   ],
-  "manifest_version": 2
+  "manifest_version": 2,
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  }
 }

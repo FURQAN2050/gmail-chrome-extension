@@ -32,5 +32,10 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'",
     "sandbox": "sandbox allow-scripts; https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js https://apis.google.com https://apis.google.com/js/client.js https://ajax.googleapis.com https://designshack.net/favicon.ico https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js https://aui-cdn.atlassian.com https://netdna.bootstrapcdn.com https://tarruda.github.com  https://cdnjs.cloudflare.com https://ydn-src-2.storage.googleapis.com  https://www.google.com/  ; default-src 'self'; object-src 'self'"
+  },
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
   }
 }

@@ -40,7 +40,7 @@ async function startExtension() {
     COMPOSEVIEW = composeView;
     composeView.addButton({
       title: "Gmail Chrome Extension",
-      iconUrl: "https://lh5.googleusercontent.com/itq66nh65lfCick8cJ-OPuqZ8OUDTIxjCc25dkc4WUT1JG8XG3z6-eboCu63_uDXSqMnLRdlvQ=s128-h128-e365",
+      iconUrl: "https://chrome.myprojectstaging.com:3000/assets/log.png",
       onClick: function (event) {
         MODAL = sdk.Widgets.showModalView({
           title: 'Groups List',
@@ -65,7 +65,7 @@ async function startExtension() {
 
         Toolbars.registerThreadButton({
           title: "customButton",
-          iconUrl: "https://lh5.googleusercontent.com/itq66nh65lfCick8cJ-OPuqZ8OUDTIxjCc25dkc4WUT1JG8XG3z6-eboCu63_uDXSqMnLRdlvQ=s128-h128-e365",
+          iconUrl: "https://chrome.myprojectstaging.com:3000/assets/log.png" || "https://lh5.googleusercontent.com/itq66nh65lfCick8cJ-OPuqZ8OUDTIxjCc25dkc4WUT1JG8XG3z6-eboCu63_uDXSqMnLRdlvQ=s128-h128-e365",
           onClick: function (event) {
             MODAL = sdk.Widgets.showModalView({
               title: 'Email Info',
