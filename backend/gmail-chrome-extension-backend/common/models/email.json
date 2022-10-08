@@ -9,8 +9,17 @@
     "email": {
       "type": "string"
     },
-    "nickname": {
+    "name": {
       "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string",
+      "mysql": {
+        "dataType": "LONGTEXT"
+      }
     }
   },
   "validations": [],
