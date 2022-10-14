@@ -14,7 +14,8 @@ export class AppComponent {
   currentUser: any = null;
   constructor(
     private auth: LoopBackAuth,
-    public loginAuth: LoginAuthenticationService
+    public loginAuth: LoginAuthenticationService,
+    public router: Router
   ) {
     LoopBackConfig.setBaseURL(BASE_URL);
     LoopBackConfig.setApiVersion(API_VERSION);
@@ -22,6 +23,9 @@ export class AppComponent {
     this.loginAuth.userAuthenticated(this.currentUser);
     this.loginAuth.getAuthObservable().subscribe((res: any) => {
       this.currentUser = res;
+      if (this.currentUser) {
+        this.router.navigate(['emails']);
+      }
     });
   }
 }

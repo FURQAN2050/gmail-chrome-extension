@@ -11,12 +11,12 @@ module.exports = function (Emailinformation) {
             // console.log(parsedTemplate);
             const $ = cheerio.load(parsedTemplate);
             let parseResponse = parseTemplate($);
-            console.log(parseResponse);
+            //console.log(parseResponse);
             parseResponse.id = id;
 
 
             Emailinformation.patchOrCreate(parseResponse, function (err, instance) {
-                console.log(instance);
+                //console.log(instance);
                 cb(null, response);
             });
 
@@ -27,6 +27,10 @@ module.exports = function (Emailinformation) {
         let response = {};
         if (isTemplate1(cheerioInstance)) {
             response = parseInfoByTemplate1(cheerioInstance);
+        }
+        if (isTemplate2(cheerioInstance)) {
+            console.log('parseTemplate2');
+            response = parseInfoByTemplate2(cheerioInstance);
         }
 
         return response;
@@ -41,6 +45,21 @@ module.exports = function (Emailinformation) {
             }).text();
 
         if (completeString.indexOf("SELF-TAPE for:") >= 0) {
+            exists = true;
+        }
+        console.log(exists);
+        return exists;
+    }
+
+    function isTemplate2(cheerioInstance) {
+        let exists = false;
+        var completeString = cheerioInstance('div').find('*')
+            .contents()
+            .filter(function () {
+                return this.type === 'text';
+            }).text();
+
+        if (completeString.indexOf("Eddie Ramos") >= 0) {
             exists = true;
         }
         console.log(exists);
@@ -81,6 +100,56 @@ module.exports = function (Emailinformation) {
             }
             if (i == "Role") {
                 templateSchema["role"] = response[i];
+            }
+        }
+
+        // console.log(i);
+        console.log(templateSchema);
+        return templateSchema;
+    }
+
+    function parseInfoByTemplate2(cheerioInstance) {
+        let templateSchema = getEmailInformationObjectTemplateSchema();
+        let TableSelectorObj = {
+            "Casting Director": 'div > div > div:nth-child(5) > div > div:nth-child(3) > div > p:nth-child(7) > span',
+            "Project": 'div > div > div:nth-child(5) > div > div:nth-child(3) > div > p:nth-child(5) > span',
+            "Role": 'div > div > div:nth-child(5) > div > div:nth-child(3) > div > p:nth-child(8) > span'
+        };
+
+        for (let i in TableSelectorObj) {
+
+            if (i == "Project") {
+                let val = cheerioInstance(TableSelectorObj[i]).text();
+                val = val.replace(/:/g, "").trim();
+                templateSchema["projectName"] = val;
+            }
+            if (i == "Client") {
+                templateSchema["clientName"] = TableSelectorObj[i];
+            }
+            if (i == "Date") {
+                templateSchema["date"] = TableSelectorObj[i];
+            }
+            if (i == "Time") {
+                templateSchema["time"] = TableSelectorObj[i];
+            }
+            if (i == "Casting Director") {
+                let val = cheerioInstance(TableSelectorObj[i]).text();
+                val = val.replace(/:/g, "").trim();
+                templateSchema["castingDirector"] = val;
+            }
+            if (i == "Start Date") {
+                templateSchema["startDate"] = TableSelectorObj[i];
+            }
+            if (i == "Wrap Date") {
+                templateSchema["endDate"] = TableSelectorObj[i];
+            }
+            if (i == "Executive Producer") {
+                templateSchema["executive"] = TableSelectorObj[i];
+            }
+            if (i == "Role") {
+                let val = cheerioInstance(TableSelectorObj[i]).text();
+                val = val.replace(/:/g, "").trim();
+                templateSchema["role"] = val;
             }
         }
 
