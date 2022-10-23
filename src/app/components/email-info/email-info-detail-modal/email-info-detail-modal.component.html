@@ -10,7 +10,7 @@
   </h1>
   <h5><b>Subject</b>: {{ emailData?.subject }}</h5>
 
-  <div class="row">
+  <div class="row" *ngIf="!editMode">
     <div class="col-md-12">
       <div class="table-responsive">
         <table class="table">
@@ -57,7 +57,81 @@
       </div>
     </div>
   </div>
+
+  <!-- Edit Mode Start -->
+  <div *ngIf="editMode">
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label class="model-h1">Data</mat-label>
+          <input [(ngModel)]="emailData.date" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label class="model-h1">Client Name</mat-label>
+          <input [(ngModel)]="emailData.clientName" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label class="model-h1">Date</mat-label>
+          <input [(ngModel)]="emailData.date" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label class="model-h1">Time</mat-label>
+          <input [(ngModel)]="emailData.time" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label class="model-h1">Executive</mat-label>
+          <input [(ngModel)]="emailData.executive" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label class="model-h1">Start Date</mat-label>
+          <input [(ngModel)]="emailData.startDate" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label class="model-h1"> End Date</mat-label>
+          <input [(ngModel)]="emailData.endDate" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="w-100">
+          <mat-label class="model-h1"> Role </mat-label>
+          <input [(ngModel)]="emailData.role" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Mode End -->
+
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Close</button>
+    <button mat-button (click)="updateEmailInfo()">
+      <mat-icon>send</mat-icon>Save
+    </button>
   </mat-dialog-actions>
 </div>

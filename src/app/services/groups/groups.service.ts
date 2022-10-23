@@ -162,4 +162,15 @@ export class GroupsService {
     if (!id) this.EmailApi.create(payload).toPromise();
     else this.EmailApi.updateAttributes(id, payload).toPromise();
   }
+
+  async upsertEmailInfo(payload) {
+    if (!payload.id) {
+      return await this.EmailInfoApi.create(payload).toPromise();
+    } else {
+      return await this.EmailInfoApi.updateAttributes(
+        payload.id,
+        payload
+      ).toPromise();
+    }
+  }
 }

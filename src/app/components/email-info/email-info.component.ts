@@ -20,6 +20,7 @@ export class EmailInfoComponent implements OnInit {
     'view',
     'processTemplate',
     'delete',
+    'edit',
   ];
   currentUser: any = null;
 
@@ -80,6 +81,23 @@ export class EmailInfoComponent implements OnInit {
       width: '900px',
       data: {
         template: element,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      if (result.success && result.data) {
+      }
+    });
+  }
+
+  editEmailInfo(event, element) {
+    event.stopPropagation();
+    let dialogRef = this.dialog.open(EmailInfoDetailModalComponent, {
+      height: 'auto',
+      width: '900px',
+      data: {
+        template: element,
+        editMode: true,
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
