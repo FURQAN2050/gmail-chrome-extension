@@ -96,11 +96,12 @@ export class AddEmailsModalComponent implements OnInit {
     }
     console.log(object);
     this.GroupsService.upsertGroup(object).then((res) => {
+      console.log(res);
       this.success = true;
       // this.addEmailToGroup();
 
       object = {};
-      this.closeDialog();
+      this.closeDialog(true);
     });
   }
 
@@ -112,8 +113,8 @@ export class AddEmailsModalComponent implements OnInit {
     });
   }
 
-  closeDialog() {
-    this.dialogRef.close({ success: this.success });
+  closeDialog(success) {
+    this.dialogRef.close({ success });
   }
 
   ngOnInit(): void {}

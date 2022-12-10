@@ -45,7 +45,10 @@ export class EmailInfoComponent implements OnInit {
     this.ApiService.lookupEmailInfo(filters).then((res) => {
       console.log(res);
       res.forEach((element: any) => {
-        element['subject'] = JSON.parse(element.subject);
+        try {
+          console.log(element);
+          element['subject'] = JSON.parse(element.subject);
+        } catch (exp) {}
       });
       this.dataSource = res;
     });

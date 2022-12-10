@@ -20,7 +20,7 @@ import { EmailEditorComponent } from 'angular-email-editor';
 export class AddTemplatesModalComponent implements OnInit {
   usenewEditor = true;
   @ViewChild(EmailEditorComponent)
-  private emailEditor: EmailEditorComponent;
+  emailEditor: EmailEditorComponent;
 
   model: any = {};
   editor: Editor;
@@ -58,14 +58,15 @@ export class AddTemplatesModalComponent implements OnInit {
     return this.form.get('editorContent');
   }
 
-  ngOnInit(): void {
-    this.editor = new Editor();
+  ngOnInit(): void {}
+  ngAfterViewInit() {
+    this.editorLoaded();
   }
 
   // make sure to destory the editor
   ngOnDestroy(): void {
-    this.editor.destroy();
-    this.emailEditor.editor.remove();
+    //this.editor.destroy();
+    //this.emailEditor.editor.remove();
   }
 
   constructor(
@@ -165,17 +166,18 @@ export class AddTemplatesModalComponent implements OnInit {
         success: this.success,
       });
     }
-    location.reload();
+    // location.reload();
   }
 
   editorLoaded() {
     console.log('editorLoaded');
-    // load the design json here
-    console.log(this.model.design);
-    if (this.model.design) {
-      this.emailEditor.editor.loadDesign(JSON.parse(this.model.design));
-    } else {
-      this.emailEditor.editor.loadDesign();
+
+    if (typeof this.emailEditor !== 'undefined') {
+      if (this.model.design && this.emailEditor) {
+        this.emailEditor.editor.loadDesign(JSON.parse(this.model.design));
+      } else {
+        this.emailEditor.editor.loadDesign();
+      }
     }
   }
 

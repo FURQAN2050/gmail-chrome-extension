@@ -215,6 +215,7 @@ export class EmailsComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
       if (result.success) {
         this.getGroups(this.currentUser);
       }
@@ -227,6 +228,7 @@ export class EmailsComponent implements OnInit {
       width: '50vw',
     });
     dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
       if (result.success) {
         this.getGroups(this.currentUser);
       }
